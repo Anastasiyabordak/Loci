@@ -9,6 +9,9 @@ Loci - проект для расширения словарного запас�
 # Технологии
 Java, MySQL 
 # [Dashboard](https://trello.com/b/MJmoT6JF/bigas)
+# [PlanningPocker](https://play.planningpoker.com/play/game/YjlRoLAd1b59TqEGoOXF4dw8fAMCyyUt)
+# [Выбор названия](https://goo.gl/forms/aYxLI051cNnhsHCr1)
+# [Плохой скрам-мастер](https://goo.gl/forms/62OnkV5bjACXl06I2)
 # Спринты
 * 09.02.2019 - 02.03.2019 Создание тренировки описание-слово, а также просмотра карточек
 * 02.03.2019 - 23.03.2019
