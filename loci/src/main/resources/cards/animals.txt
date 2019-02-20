@@ -1,0 +1,5 @@
+"Mammal","Did you know that humans are ___? ___ are animals that have hair or fur, have live babies instead of laying eggs, and feed their babies milk from the mother. ___ are also warm-blooded, which means they make their own heat. ","src/main/resources/images/animals/mammal.png"
+"Reptiles","__ are animals that are cold-blooded, which means that they do not make their own heat. This is why you might see a snake or lizard laying in the sun to warm up! ___ also lay eggs and have scales on their bodies.Can you find the scales on the body of this snake? snake Some ___ you might know are turtles, snakes, and lizards like iguanas and geckos. ","src/main/resources/images/animals/reptiles.jpg"
+"Birds","Did you know that all ___ have wings, but not all ___ can fly? ___ like penguins are called flightless birds. ","src/main/resources/images/animals/birds.jpg"
+"ФЫВА","ОЛДЖ","/home/фыва.txt"
+"qwerty","","/home/qwerty.txt"
