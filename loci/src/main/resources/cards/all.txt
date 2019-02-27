@@ -1,1 +1,3 @@
 "src/main/resources/cards/animals.txt"
+"src/main/resources/cards/food.txt"
+"src/main/resources/cards/programming.txt"
