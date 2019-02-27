@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import loci.entity.Card;
 import loci.exception.CustomException;
+
 import loci.parser.DatabaseCreator;
 import loci.traning.EnterWord;
 

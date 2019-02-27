@@ -1,12 +1,5 @@
 package loci.exception;
 
-/**
- * this class contains custom exception entity.
- *
- * @author Milena Vysotskaya
- * @version 1.0
- * @since 2018-11-08
- */
 public class CustomException extends Exception {
     /**
      * public default constructor.

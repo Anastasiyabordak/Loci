@@ -2,9 +2,9 @@ package loci.parser;
 
 import loci.entity.Card;
 import loci.validator.DataValidator;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.Level;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class DataFilesParser {
     public static final int DEFINITION_POSITION = 1;
 
     public List<String[]> findValidInfoStrings(final List<String> fileLines) {
-        Logger logger = LogManager.getLogger();
+        //Logger logger = LogManager.getLogger();
 
         DataValidator validator = new DataValidator();
         List<String[]> validDataStrings = new ArrayList<>();
@@ -33,9 +33,9 @@ public class DataFilesParser {
 
                 validDataStrings.add(data);
             } else {
-                logger.log(Level.INFO, "String <<"
-                        + input
-                        + ">> contains invalid data\n");
+//                logger.log(Level.INFO, "String <<"
+//                        + input
+//                        + ">> contains invalid data\n");
             }
         }
         return validDataStrings;
