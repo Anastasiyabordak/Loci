@@ -43,4 +43,19 @@ public class Desk {
         return cardData;
     }
 
+    public ObservableList<String>  setCategoryList()
+    {
+        ObservableList<String> categoryData = FXCollections.observableArrayList();
+        List<String> categories = database.getCategoriesList();
+
+        categoryData.add("all");
+
+        for (int i = 0; i < categories.size(); i++)
+        {
+            String category = categories.get(i);
+            categoryData.add(category);
+        }
+
+        return categoryData;
+    }
 }

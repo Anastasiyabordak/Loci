@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import loci.desk.Desk;
@@ -60,6 +61,8 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn statusTableColumn;
     @FXML
+    private ImageView deskQuestionImage;
+    @FXML
     private GridPane gridForButtons;
 
     EnterWord enterWord = new EnterWord();
@@ -86,7 +89,15 @@ public class Controller implements Initializable {
         }
 
         setDesk();
+        setCategoryOfCardBox();
         enterWordTraning();
+    }
+
+    public void getImage(MouseEvent event){
+        Card selectedCard;
+        selectedCard = tableViev.getSelectionModel().getSelectedItem();
+        selectedCard.getPicturePath();
+        deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(19)));
     }
 
     public void checkAnswer(KeyEvent event)
@@ -109,6 +120,16 @@ public class Controller implements Initializable {
                 this.resultText.setVisible(true);
             }
         }
+    }
+
+    public void changeCardsOfCategory(ActionEvent event){
+
+        String category = categoryOfCardBox.getValue().toString();
+        deskQuestionImage.setImage(new Image("images/question.png"));
+        if(category.equalsIgnoreCase("all"))
+            tableViev.setItems(new Desk().setCardsList());
+        else
+            tableViev.setItems(new Desk().setCardsList(category));
     }
 
     public void variantASelected(ActionEvent event)
@@ -170,4 +191,10 @@ public class Controller implements Initializable {
 //        tableViev.setItems(new Desk().setCardsList("animals"));
         tableViev.setItems(new Desk().setCardsList());
     }
+
+    public void setCategoryOfCardBox()
+    {
+        categoryOfCardBox.setItems(new Desk().setCategoryList());
+    }
+
 }
