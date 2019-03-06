@@ -1,15 +1,19 @@
 package loci.gui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import loci.desk.Desk;
 import loci.entity.Card;
 import loci.exception.CustomException;
 
@@ -48,11 +52,11 @@ public class Controller implements Initializable {
     @FXML
     private ComboBox categoryOfCardBox; //тут все текущие словари
     @FXML
-    private TableView tableViev;
+    private TableView<Card> tableViev;
     @FXML
-    private TableColumn backTableColumn;
+    private TableColumn<Card, String> backTableColumn;
     @FXML
-    private TableColumn frontTableColumn;
+    private TableColumn<Card, String> frontTableColumn;
     @FXML
     private TableColumn statusTableColumn;
     @FXML
@@ -61,7 +65,6 @@ public class Controller implements Initializable {
     EnterWord enterWord = new EnterWord();
     Card card;
     Image startImage = new Image("images/question.png");
-
 
     //Tab of "Help"
     @FXML
@@ -81,6 +84,8 @@ public class Controller implements Initializable {
         } catch (CustomException e) {
             e.printStackTrace();
         }
+
+        setDesk();
         enterWordTraning();
     }
 
@@ -156,5 +161,13 @@ public class Controller implements Initializable {
         this.variantD_Button.setVisible(false);
         this.answerTextArea.setVisible(false);
         this.resultText.setVisible(false);
+    }
+
+    public void setDesk()
+    {
+        backTableColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("word"));
+        frontTableColumn.setCellValueFactory(new PropertyValueFactory<Card, String>("definition"));
+//        tableViev.setItems(new Desk().setCardsList("animals"));
+        tableViev.setItems(new Desk().setCardsList());
     }
 }
