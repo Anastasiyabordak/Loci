@@ -4,16 +4,16 @@ import loci.entity.Card;
 import loci.traning.splitter.Splitter;
 import loci.traning.splitter.SplitterImpl;
 import loci.traning.splitter.SplitterThreeChars;
-import loci.traning.splitter.SplitterTwoChars;
+import loci.traning.splitter.SplitterTwoOrFourChars;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class WordFromParts extends Traning {
 
     private static final int WORD_FROM_TWO_LETTERS = 2;
     private static final int WORD_FROM_THREE_LETTERS = 3;
+    private static final int WORD_FROM_FOUR_LETTERS = 4;
 
     public boolean validToSplit(Card card) {
         return card.getWord().length() >= 1;
@@ -28,7 +28,8 @@ public class WordFromParts extends Traning {
 
         switch (word.length()) {
             case WORD_FROM_TWO_LETTERS:
-                splitter = new SplitterTwoChars();
+            case WORD_FROM_FOUR_LETTERS:
+                splitter = new SplitterTwoOrFourChars();
                 break;
             case WORD_FROM_THREE_LETTERS:
                 splitter = new SplitterThreeChars();

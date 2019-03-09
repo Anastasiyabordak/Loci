@@ -3,13 +3,14 @@ package loci.traning.splitter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SplitterTwoChars implements Splitter {
+public class SplitterTwoOrFourChars implements Splitter {
 
     @Override
     public List<String> splitWord(String word) {
         List<String> splitted = new ArrayList<>();
-        splitted.add(String.valueOf(word.charAt(0)));
-        splitted.add(String.valueOf(word.charAt(1)));
+        for (int i = 0; i < word.length(); i++) {
+            splitted.add(String.valueOf(word.charAt(i)));
+        }
         return splitted;
     }
 }
