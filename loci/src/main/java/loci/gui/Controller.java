@@ -90,7 +90,7 @@ public class Controller implements Initializable {
 
     EnterWord enterWord = new EnterWord();
     Card card;
-    String startPath = new String("images/start/question.png");
+    String startPath = new String("images/question.png");
     Image startImage = new Image(startPath);
 
     //Tab of "Help"
