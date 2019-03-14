@@ -22,7 +22,7 @@ public class DatabaseCreator {
             pathToFile = pathToFile.replace("\"", "");
             List<String> data = reader.readStringsFromFile(pathToFile);
             List<Card> cards = parser.createCardsFromValidData(parser.findValidInfoStrings(data));
-            String category = pathToFile.replaceAll("src/main/resources/cards/", "")
+            String category = pathToFile.replaceAll("src/main/resources/cards/", "") //please make constants
                                         .replaceAll(".txt", "");
             database.addCategory(category, cards);
         }

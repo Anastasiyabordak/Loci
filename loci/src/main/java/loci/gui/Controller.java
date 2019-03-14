@@ -90,8 +90,7 @@ public class Controller implements Initializable {
 
     EnterWord enterWord = new EnterWord();
     Card card;
-    String startPath = new String("images/question.png");
-    Image startImage = new Image(startPath);
+    Image startImage = new Image("images/question.png");
 
     //Tab of "Help"
     @FXML
@@ -112,29 +111,31 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
+        deskQuestionImage.setImage(startImage);
+
         setDesk();
         setCategoryOfCardBox();
         enterWordTraning();
     }
 
-    public void getImage(MouseEvent event){
+    public void getImage(MouseEvent event) {
         Card selectedCard;
         selectedCard = tableViev.getSelectionModel().getSelectedItem();
-        deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(19)));
+        if (selectedCard != null) {
+            deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(19))); //WTF 19?
+        }
     }
 
-    public void checkAnswer(KeyEvent event)
-    {
-        if(event.getCode() == KeyCode.ENTER){
-            if(this.resultText.isVisible()){
+    public void checkAnswer(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            if (this.resultText.isVisible()) {
                 this.answerTextArea.setText("");
-                this.answerTextArea.setStyle("-fx-text-fill: black");
+                this.answerTextArea.setStyle("-fx-text-fill: black"); //please make private constant "-fx-text-fill" and "black"
                 this.answerTextArea.setEditable(true);
                 this.resultText.setVisible(false);
                 enterWordTraning();
-            }
-            else{
-                if(answerTextArea.getText().equalsIgnoreCase(card.getWord()))
+            } else {
+                if (answerTextArea.getText().equalsIgnoreCase(card.getWord()))
                     this.answerTextArea.setStyle("-fx-text-fill: green");
                 else
                     this.answerTextArea.setStyle("-fx-text-fill: red");
@@ -145,62 +146,38 @@ public class Controller implements Initializable {
         }
     }
 
-    public void goToTraining(ActionEvent event){
-
+    public void goToTraining(ActionEvent event) {
         trainingSettingsPane.setVisible(false);
         trainingPane.setVisible(true);
-
     }
 
-    public void goToSettings(ActionEvent event){
-
+    public void goToSettings(ActionEvent event) {
         trainingSettingsPane.setVisible(true);
         trainingPane.setVisible(false);
-
     }
 
-    public void changeCardsOfCategory(ActionEvent event){
-
+    public void changeCardsOfCategory(ActionEvent event) {
         String category = categoryOfCardBox.getValue().toString();
-        deskQuestionImage.setImage(new Image(startPath));
-        if(category.equalsIgnoreCase("all"))
+        deskQuestionImage.setImage(startImage);
+        if (category.equalsIgnoreCase("all"))
             tableViev.setItems(new Desk().setCardsList());
         else
             tableViev.setItems(new Desk().setCardsList(category));
     }
 
-    public void variantASelected(ActionEvent event)
-    {
-//        this.resultText.setVisible(true);
-//        this.answerTextArea.setVisible(false);
-//        this.resultText.setText("Ты нажал на кнопку А");
+    public void variantASelected(ActionEvent event) {
     }
 
-    public void variantBSelected(ActionEvent event)
-    {
-//        this.resultText.setVisible(true);
-//        this.answerTextArea.setVisible(false);
-//        this.resultText.setText("Ты нажал на кнопку B");
+    public void variantBSelected(ActionEvent event) {
     }
 
-    public void variantCSelected(ActionEvent event)
-    {
-//        this.resultText.setVisible(true);
-//        this.answerTextArea.setVisible(false);
-//        this.resultText.setText("Ты нажал на кнопку C");
+    public void variantCSelected(ActionEvent event) {
     }
 
-    public void variantDSelected(ActionEvent event)
-    {
+    public void variantDSelected(ActionEvent event) {
     }
 
-    public void answerSelected(ActionEvent event)
-    {
-//        this.variantA_Button.setVisible(true);
-//        this.variantB_Button.setVisible(true);
-//        this.variantC_Button.setVisible(true);
-//        this.variantD_Button.setVisible(true);
-//        this.answerTextArea.setText("Вы отаетили на вопрос");
+    public void answerSelected(ActionEvent event) {
     }
 
     public void enterWordTraning() {
@@ -212,14 +189,13 @@ public class Controller implements Initializable {
         questionImage.setImage(new Image(card.getPicturePath().substring(19)));
     }
 
-    public void setAllWidgetsUnvisible(){
+    public void setAllWidgetsUnvisible() {
         this.gridForButtons.setVisible(false);
         this.answerTextArea.setVisible(false);
         this.resultText.setVisible(false);
     }
 
-    public void setDesk()
-    {
+    public void setDesk() {
 
         frontTableColumn.setCellValueFactory(cellData -> (new SimpleStringProperty()));
         frontTableColumn.setCellFactory(param -> {
@@ -235,38 +211,33 @@ public class Controller implements Initializable {
         backTableColumn.setCellValueFactory(new PropertyValueFactory<>("word"));
         frontTableColumn.setCellValueFactory(new PropertyValueFactory<>("definition"));
         tableViev.setItems(new Desk().setCardsList());
+
     }
 
-    public void setCategoryOfCardBox()
-    {
+    public void setCategoryOfCardBox() {
         categoryOfCardBox.setItems(new Desk().setCategoryList());
     }
 
-    public void openImageDesk(MouseEvent event){
+    public void openImageDesk(MouseEvent event) {
 
-        Alert dialog = new Alert(Alert.AlertType.NONE);
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.setTitle("IMAGE");
+        if (deskQuestionImage.getImage() != startImage) {
 
-        Card setCard;
-        setCard = tableViev.getSelectionModel().getSelectedItem();
-        ImageView img;
-        if(setCard == null)
-            img = new ImageView(new Image(startPath));//deskQuestionImage;
-        else
-            img = new ImageView(new Image(setCard.getPicturePath().substring(19)));//deskQuestionImage;
+            Alert dialog = new Alert(Alert.AlertType.NONE);
+            dialog.initStyle(StageStyle.UTILITY);
+            dialog.setTitle("IMAGE");
 
-        img.setPreserveRatio(true);
-        img.setFitHeight(700);
-        img.setFitWidth(500);
+            ImageView img = new ImageView();
+            img.setImage(deskQuestionImage.getImage());//deskQuestionImage;
+            img.setPreserveRatio(true);
+            img.setFitHeight(700);
+            img.setFitWidth(500);
 
-        BorderPane pane = new BorderPane();
-        pane.setPrefSize(300, 400);
-        pane.setCenter(img);
-
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
-        dialog.getDialogPane().setGraphic(pane);
-
-        Optional<ButtonType> r = dialog.showAndWait();
+            BorderPane pane = new BorderPane();
+            pane.setPrefSize(300, 400);
+            pane.setCenter(img);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            dialog.getDialogPane().setGraphic(pane);
+            dialog.showAndWait();
+        }
     }
 }

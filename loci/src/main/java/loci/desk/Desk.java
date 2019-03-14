@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import loci.database.Database;
 import loci.entity.Card;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Desk {
@@ -15,47 +16,30 @@ public class Desk {
         ObservableList<Card> cardData = FXCollections.observableArrayList();
         List<String> categories = database.getCategoriesList();
 
-        for (int i = 0; i < categories.size(); i++)
-        {
-            String category = categories.get(i);
+        for (String category : categories) {
             List<Card> cards = database.getCardsByCategory(category);
-            for (int j = 0; j < cards.size(); j++)
-            {
-                Card card = cards.get(j);
-                cardData.add(card);
-            }
+            cardData.addAll(cards);
         }
 
         return cardData;
     }
 
-    public ObservableList<Card>  setCardsList(String category)
-    {
+    public ObservableList<Card> setCardsList(String category) {
         ObservableList<Card> cardData = FXCollections.observableArrayList();
         List<Card> cards = database.getCardsByCategory(category);
 
-        for (int i = 0; i < cards.size(); i++)
-        {
-            Card card = cards.get(i);
-            cardData.add(card);
-        }
+        cardData.addAll(cards);
 
         return cardData;
     }
 
-    public ObservableList<String>  setCategoryList()
-    {
+    public ObservableList<String> setCategoryList() {
         ObservableList<String> categoryData = FXCollections.observableArrayList();
         List<String> categories = database.getCategoriesList();
 
         categoryData.add("all");
 
-        for (int i = 0; i < categories.size(); i++)
-        {
-            String category = categories.get(i);
-            categoryData.add(category);
-        }
-
+        categoryData.addAll(categories);
         return categoryData;
     }
 }

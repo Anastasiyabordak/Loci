@@ -28,7 +28,7 @@ public final class Database {
     }
 
     public void addCategory(String category, List<Card> cards) {
-        if(!cards.isEmpty()) {
+        if (!cards.isEmpty()) {
             this.dataMap.put(category, cards);
         }
     }
@@ -43,6 +43,7 @@ public final class Database {
 
     /**
      * This method return size of list of objects BusStop.
+     *
      * @return size of list of stops.
      */
     public int size() {
