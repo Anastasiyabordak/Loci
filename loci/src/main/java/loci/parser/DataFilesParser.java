@@ -43,7 +43,7 @@ public class DataFilesParser {
 
     public List<Card> createCardsFromValidData(
             final List<String[]> validDataStrings) {
-        List<Card> cards = new ArrayList<Card>();
+        List<Card> cards = new ArrayList<>();
         for (String[] data : validDataStrings) {
                 cards.add(new Card(data[WORD_POSITION], data[DEFINITION_POSITION], data[PICTURE_PATH_POSITION]));
         }

@@ -1,7 +1,6 @@
 package loci.gui;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +25,6 @@ import loci.parser.DatabaseCreator;
 import loci.traning.EnterWord;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -49,26 +47,26 @@ public class Controller implements Initializable {
     @FXML
     private ImageView questionImage;
     @FXML
-    private Button variantA_Button;
+    private Button buttonVariantA;
     @FXML
-    private Button variantB_Button;
+    private Button buttonVariantB;
     @FXML
-    private Button variantC_Button;
+    private Button buttonVariantC;
     @FXML
-    private Button variantD_Button;
+    private Button buttonVariantD;
     @FXML
     private Button goToSettingsButton;
     @FXML
     private GridPane gridForButtons;
     //Settings for training
     @FXML
-    private RadioButton isTraining1Set;
+    private RadioButton trainingByImageAndDefinition;
     @FXML
-    private RadioButton isTraining2Set;
+    private RadioButton trainingByImage;
     @FXML
-    private RadioButton isTraining3Set;
+    private RadioButton trainingByDefinition;
     @FXML
-    private RadioButton isTraining4Set;
+    private RadioButton trainingBySyllable;
     @FXML
     private Button startTrainingButton;
 
@@ -88,9 +86,11 @@ public class Controller implements Initializable {
     @FXML
     private ImageView deskQuestionImage;
 
-    EnterWord enterWord = new EnterWord();
-    Card card;
-    Image startImage = new Image("images/question.png");
+    private EnterWord enterWord = new EnterWord();
+    private Card card;
+    private Image startImage = new Image("images/question.png");
+    private int substringPath = 19;
+    private ToggleGroup trainingsGroup = new ToggleGroup();
 
     //Tab of "Help"
     @FXML
@@ -99,7 +99,7 @@ public class Controller implements Initializable {
     private TextArea helpInformationTextArea;
 
     @FXML
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
 
         setAllWidgetsUnvisible();
         questionImage.setImage(startImage);
@@ -115,25 +115,33 @@ public class Controller implements Initializable {
 
         setDesk();
         setCategoryOfCardBox();
-        enterWordTraning();
+        createToggleGroup();
+        //enterWordTraining();
     }
 
-    public void getImage(MouseEvent event) {
+    public void createToggleGroup() {
+        trainingByImageAndDefinition.setToggleGroup(trainingsGroup);
+        trainingByImage.setToggleGroup(trainingsGroup);
+        trainingByDefinition.setToggleGroup(trainingsGroup);
+        trainingBySyllable.setToggleGroup(trainingsGroup);
+    }
+
+    public void getImage(final MouseEvent event) {
         Card selectedCard;
         selectedCard = tableViev.getSelectionModel().getSelectedItem();
         if (selectedCard != null) {
-            deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(19))); //WTF 19?
+            deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(substringPath))); //WTF 19?
         }
     }
 
-    public void checkAnswer(KeyEvent event) {
+    public void checkAnswer(final KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (this.resultText.isVisible()) {
                 this.answerTextArea.setText("");
                 this.answerTextArea.setStyle("-fx-text-fill: black"); //please make private constant "-fx-text-fill" and "black"
                 this.answerTextArea.setEditable(true);
                 this.resultText.setVisible(false);
-                enterWordTraning();
+                selectAndStartTraining();
             } else {
                 if (answerTextArea.getText().equalsIgnoreCase(card.getWord()))
                     this.answerTextArea.setStyle("-fx-text-fill: green");
@@ -146,17 +154,18 @@ public class Controller implements Initializable {
         }
     }
 
-    public void goToTraining(ActionEvent event) {
+    public void goToTraining(final ActionEvent event) {
         trainingSettingsPane.setVisible(false);
         trainingPane.setVisible(true);
+        selectAndStartTraining();
     }
 
-    public void goToSettings(ActionEvent event) {
+    public void goToSettings(final ActionEvent event) {
         trainingSettingsPane.setVisible(true);
         trainingPane.setVisible(false);
     }
 
-    public void changeCardsOfCategory(ActionEvent event) {
+    public void changeCardsOfCategory(final ActionEvent event) {
         String category = categoryOfCardBox.getValue().toString();
         deskQuestionImage.setImage(startImage);
         if (category.equalsIgnoreCase("all"))
@@ -177,16 +186,40 @@ public class Controller implements Initializable {
     public void variantDSelected(ActionEvent event) {
     }
 
-    public void answerSelected(ActionEvent event) {
+    public void selectAndStartTraining() {
+        if(trainingByImageAndDefinition.isSelected())
+            enterWordByImageAndDefinitionTraining();
+        if(trainingByImage.isSelected())
+            enterWordByImageTraining();
+        if(trainingByDefinition.isSelected())
+            enterWordByDefinitionTraining();
+
     }
 
-    public void enterWordTraning() {
+    public void enterWordByImageAndDefinitionTraining() {
         this.answerTextArea.setVisible(true);
-        this.answerTextArea.requestFocus();
+        changeCard();
+        this.questionTextArea.setText(card.getDefinition());
+        questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
+    }
+
+    public void enterWordByDefinitionTraining() {
+        this.answerTextArea.setVisible(true);
+        changeCard();
+        this.questionTextArea.setText(card.getDefinition());
+        questionImage.setImage(startImage);
+    }
+
+    public void enterWordByImageTraining() {
+        this.answerTextArea.setVisible(true);
+        changeCard();
+        questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
+        questionTextArea.setText("");
+    }
+
+    public void changeCard() {
         String category = enterWord.chooseCategory();
         card = enterWord.chooseCard(category);
-        this.questionTextArea.setText(card.getDefinition());
-        questionImage.setImage(new Image(card.getPicturePath().substring(19)));
     }
 
     public void setAllWidgetsUnvisible() {
@@ -227,7 +260,7 @@ public class Controller implements Initializable {
             dialog.setTitle("IMAGE");
 
             ImageView img = new ImageView();
-            img.setImage(deskQuestionImage.getImage());//deskQuestionImage;
+            img.setImage(deskQuestionImage.getImage()); 
             img.setPreserveRatio(true);
             img.setFitHeight(700);
             img.setFitWidth(500);

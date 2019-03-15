@@ -33,22 +33,22 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Button>
-                              <RadioButton fx:id="isTraining4Set" layoutY="232.8984375" mnemonicParsing="false" text="By syllable">
+                              <RadioButton fx:id="trainingBySyllable" layoutY="232.8984375" mnemonicParsing="false" text="By syllable">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton fx:id="isTraning2Set" layoutY="109.8984375" mnemonicParsing="false" text="By image">
+                              <RadioButton fx:id="trainingByImage" layoutY="109.8984375" mnemonicParsing="false" text="By image">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton fx:id="isTraining1Set" layoutY="50.8984375" mnemonicParsing="false" text="By image and definition">
+                              <RadioButton fx:id="trainingByImageAndDefinition" layoutY="50.8984375" mnemonicParsing="false" text="By image and definition">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton fx:id="isTraining3Set" layoutY="171.8984375" mnemonicParsing="false" text="By definition">
+                              <RadioButton fx:id="trainingByDefinition" layoutY="171.8984375" mnemonicParsing="false" text="By definition">
                                  <font>
                                     <Font size="24.0" />
                                  </font>
@@ -83,22 +83,22 @@
                                               <RowConstraints maxHeight="94.0" minHeight="0.0" prefHeight="78.0" valignment="BOTTOM" vgrow="SOMETIMES" />
                                           </rowConstraints>
                                           <children>
-                                              <Button fx:id="variantC_Button" mnemonicParsing="false" onAction="#variantCSelected" prefHeight="60.0" prefWidth="300.0" text="Variant C" textAlignment="CENTER" GridPane.rowIndex="2">
+                                              <Button fx:id="buttonVariantA" mnemonicParsing="false" onAction="#variantCSelected" prefHeight="60.0" prefWidth="300.0" text="Variant C" textAlignment="CENTER" GridPane.rowIndex="2">
                                                   <font>
                                                       <Font name="Comic Sans MS" size="24.0" />
                                                   </font>
                                               </Button>
-                                              <Button fx:id="variantB_Button" mnemonicParsing="false" onAction="#variantBSelected" prefHeight="60.0" prefWidth="300.0" text="Variant B" textAlignment="CENTER" GridPane.columnIndex="1">
+                                              <Button fx:id="buttonVariantB" mnemonicParsing="false" onAction="#variantBSelected" prefHeight="60.0" prefWidth="300.0" text="Variant B" textAlignment="CENTER" GridPane.columnIndex="1">
                                                   <font>
                                                       <Font name="Comic Sans MS" size="24.0" />
                                                   </font>
                                               </Button>
-                                              <Button fx:id="variantA_Button" mnemonicParsing="false" onAction="#variantASelected" prefHeight="60.0" prefWidth="300.0" text="Variant A" textAlignment="CENTER">
+                                              <Button fx:id="buttonVariantC" mnemonicParsing="false" onAction="#variantASelected" prefHeight="60.0" prefWidth="300.0" text="Variant A" textAlignment="CENTER">
                                                   <font>
                                                       <Font name="Comic Sans MS" size="24.0" />
                                                   </font>
                                               </Button>
-                                              <Button fx:id="variantD_Button" mnemonicParsing="false" onAction="#variantDSelected" prefHeight="60.0" prefWidth="300.0" text="Variant D" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                              <Button fx:id="buttonVariantD" mnemonicParsing="false" onAction="#variantDSelected" prefHeight="60.0" prefWidth="300.0" text="Variant D" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                   <font>
                                                       <Font name="Comic Sans MS" size="24.0" />
                                                   </font>

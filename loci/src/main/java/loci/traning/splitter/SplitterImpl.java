@@ -10,7 +10,8 @@ public class SplitterImpl implements Splitter {
     @Override
     public List<String> splitWord(String word) {
 
-        String temp1, temp2;
+        String temp1;
+        String temp2;
         List<String> splitted = new ArrayList<>();
 
         temp1 = word.substring(0, randEndIndexForm(word));

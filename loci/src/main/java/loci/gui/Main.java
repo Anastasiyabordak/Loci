@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(final Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("sample.fxml"));
 
         Parent root = loader.load();
@@ -24,12 +24,10 @@ public class Main extends Application {
         Scene scene = new Scene(pane, 900, 600);
 
         primaryStage.setTitle("LOCI");
-        primaryStage.setResizable(false); // закрепить/открепить изменения размера окна пользователем
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
-
     public static void main(String[] args) {
         launch(args);
     }

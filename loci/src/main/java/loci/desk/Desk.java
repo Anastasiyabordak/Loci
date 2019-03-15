@@ -4,8 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import loci.database.Database;
 import loci.entity.Card;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class Desk {
@@ -24,7 +22,7 @@ public class Desk {
         return cardData;
     }
 
-    public ObservableList<Card> setCardsList(String category) {
+    public ObservableList<Card> setCardsList(final String category) {
         ObservableList<Card> cardData = FXCollections.observableArrayList();
         List<Card> cards = database.getCardsByCategory(category);
 
@@ -38,7 +36,6 @@ public class Desk {
         List<String> categories = database.getCategoriesList();
 
         categoryData.add("all");
-
         categoryData.addAll(categories);
         return categoryData;
     }

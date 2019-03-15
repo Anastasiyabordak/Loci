@@ -9,7 +9,7 @@ import loci.traning.splitter.SplitterTwoOrFourChars;
 import java.util.Collections;
 import java.util.List;
 
-public class WordFromParts extends Traning {
+public class WordFromParts extends Training {
 
     private static final int WORD_FROM_TWO_LETTERS = 2;
     private static final int WORD_FROM_THREE_LETTERS = 3;
