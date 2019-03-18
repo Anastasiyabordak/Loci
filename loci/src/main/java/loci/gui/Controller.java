@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
 import loci.desk.Desk;
@@ -23,9 +24,11 @@ import loci.exception.CustomException;
 
 import loci.parser.DatabaseCreator;
 import loci.traning.EnterWord;
+import loci.traning.WordFromParts;
 
+import javax.management.ObjectName;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class Controller implements Initializable {
@@ -91,6 +94,8 @@ public class Controller implements Initializable {
     private Image startImage = new Image("images/question.png");
     private int substringPath = 19;
     private ToggleGroup trainingsGroup = new ToggleGroup();
+    private List<String> syllables;
+    private boolean isMistake = false;
 
     //Tab of "Help"
     @FXML
@@ -136,7 +141,7 @@ public class Controller implements Initializable {
 
     public void checkAnswer(final KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            if (this.resultText.isVisible()) {
+            if (!this.resultText.getText().equalsIgnoreCase("")) {
                 this.answerTextArea.setText("");
                 this.answerTextArea.setStyle("-fx-text-fill: black"); //please make private constant "-fx-text-fill" and "black"
                 this.answerTextArea.setEditable(true);
@@ -175,46 +180,92 @@ public class Controller implements Initializable {
     }
 
     public void variantASelected(ActionEvent event) {
+        analizeAnswer(buttonVariantA);
     }
 
     public void variantBSelected(ActionEvent event) {
+        analizeAnswer(buttonVariantB);
     }
 
     public void variantCSelected(ActionEvent event) {
+        analizeAnswer(buttonVariantC);
     }
 
     public void variantDSelected(ActionEvent event) {
+        analizeAnswer(buttonVariantD);
+    }
+
+    public void analizeAnswer(Button button) {
+        if(!syllables.isEmpty() && !isMistake)
+        {
+            if(syllables.get(0).equalsIgnoreCase(button.getText()))
+            {
+                resultText.setText(resultText.getText() + syllables.remove(0));
+            }
+            else{
+                resultText.setText(resultText.getText() + button.getText());
+                isMistake = true;
+                resultText.setFill(Color.RED);
+            }
+        }
+        else{
+            isMistake = false;
+            resultText.setFill(Color.GREEN);
+            selectAndStartTraining();
+        }
     }
 
     public void selectAndStartTraining() {
+        setAllWidgetsUnvisible();
+        changeCard();
         if(trainingByImageAndDefinition.isSelected())
             enterWordByImageAndDefinitionTraining();
         if(trainingByImage.isSelected())
             enterWordByImageTraining();
         if(trainingByDefinition.isSelected())
             enterWordByDefinitionTraining();
+        if(trainingBySyllable.isSelected())
+            buttonsTrainingBySyllable();
 
     }
 
+    public void buttonsTrainingBySyllable()
+    {
+        prepareScreenForButtonsTraining();
+        WordFromParts wordFromParts = new WordFromParts();
+        syllables = wordFromParts.wordSplit(card);
+        List<String> sortedSyllables = new ArrayList<>();
+        sortedSyllables.addAll(syllables);
+        questionTextArea.setText(card.getDefinition());
+        questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
+        Collections.sort(sortedSyllables, Comparator.comparing(Object::toString));
+        setSyllablesInButtons(sortedSyllables);
+    }
+
+    public void setSyllablesInButtons( List<String> sortebSyllables)
+    {
+        buttonVariantA.setText(sortebSyllables.remove(0));
+        buttonVariantB.setText(sortebSyllables.remove(0));
+        if(!sortebSyllables.isEmpty())
+            buttonVariantC.setText(sortebSyllables.remove(0));
+        if(!sortebSyllables.isEmpty())
+            buttonVariantD.setText(sortebSyllables.remove(0));
+    }
+
     public void enterWordByImageAndDefinitionTraining() {
-        this.answerTextArea.setVisible(true);
-        changeCard();
+        prepareScreenForEnterTraining();
         this.questionTextArea.setText(card.getDefinition());
         questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
     }
 
     public void enterWordByDefinitionTraining() {
-        this.answerTextArea.setVisible(true);
-        changeCard();
+        prepareScreenForEnterTraining();
         this.questionTextArea.setText(card.getDefinition());
-        questionImage.setImage(startImage);
     }
 
     public void enterWordByImageTraining() {
-        this.answerTextArea.setVisible(true);
-        changeCard();
+        prepareScreenForEnterTraining();
         questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
-        questionTextArea.setText("");
     }
 
     public void changeCard() {
@@ -222,8 +273,37 @@ public class Controller implements Initializable {
         card = enterWord.chooseCard(category);
     }
 
+    public void prepareScreenForButtonsTraining()
+    {
+        this.resultText.setText("");
+        this.questionTextArea.setText("");
+        this.buttonVariantA.setText("");
+        this.buttonVariantB.setText("");
+        this.buttonVariantC.setText("");
+        this.buttonVariantD.setText("");
+        this.questionImage.setImage(startImage);
+        this.questionTextArea.setVisible(true);
+        this.questionImage.setVisible(true);
+        this.resultText.setVisible(true);
+        this.gridForButtons.setVisible(true);
+    }
+
+    public void prepareScreenForEnterTraining()
+    {
+        this.answerTextArea.setText("");
+        this.resultText.setText("");
+        this.questionTextArea.setText("");
+        this.questionImage.setImage(startImage);
+        this.questionTextArea.setVisible(true);
+        this.questionImage.setVisible(true);
+        this.answerTextArea.setVisible(true);
+        this.resultText.setVisible(true);
+    }
+
     public void setAllWidgetsUnvisible() {
         this.gridForButtons.setVisible(false);
+        this.questionTextArea.setVisible(false);
+        this.questionImage.setVisible(false);
         this.answerTextArea.setVisible(false);
         this.resultText.setVisible(false);
     }
