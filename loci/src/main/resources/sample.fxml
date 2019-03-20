@@ -26,7 +26,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="571.0" prefWidth="911.0">
                             <children>
-                        <AnchorPane fx:id="trainingSettingsPane" layoutX="35.0" layoutY="22.0" prefHeight="529.0" prefWidth="842.0" visible="false">
+                        <AnchorPane fx:id="trainingSettingsPane" layoutX="35.0" layoutY="22.0" prefHeight="529.0" prefWidth="842.0">
                            <children>
                               <Button fx:id="startTrainingButton" layoutX="722.0" layoutY="487.0" mnemonicParsing="false" onAction="#goToTraining" prefHeight="42.0" prefWidth="106.0" text="Training">
                                  <font>
@@ -60,7 +60,7 @@
                               </Text>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="trainingPane" prefHeight="579.0" prefWidth="915.0">
+                        <AnchorPane fx:id="trainingPane" onKeyPressed="#checkAnswerForEnter" prefHeight="579.0" prefWidth="915.0" visible="false">
                            <children>
                                       <Text fx:id="questionTextArea" layoutX="405.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text, text, text" wrappingWidth="465.18023681640625">
                                           <font>
@@ -85,22 +85,22 @@
                                           <children>
                                               <Button fx:id="buttonVariantC" mnemonicParsing="false" onAction="#variantCSelected" prefHeight="60.0" prefWidth="300.0" text="Variant C" textAlignment="CENTER" GridPane.rowIndex="2">
                                                   <font>
-                                                      <Font name="Comic Sans MS" size="24.0" />
+                                                      <Font name="Arial Bold" size="27.0" />
                                                   </font>
                                               </Button>
                                               <Button fx:id="buttonVariantB" mnemonicParsing="false" onAction="#variantBSelected" prefHeight="60.0" prefWidth="300.0" text="Variant B" textAlignment="CENTER" GridPane.columnIndex="1">
                                                   <font>
-                                                      <Font name="Comic Sans MS" size="24.0" />
+                                                      <Font name="Arial Bold" size="27.0" />
                                                   </font>
                                               </Button>
                                               <Button fx:id="buttonVariantA" mnemonicParsing="false" onAction="#variantASelected" prefHeight="60.0" prefWidth="300.0" text="Variant A" textAlignment="CENTER">
                                                   <font>
-                                                      <Font name="Comic Sans MS" size="24.0" />
+                                                      <Font name="Arial Bold" size="27.0" />
                                                   </font>
                                               </Button>
                                               <Button fx:id="buttonVariantD" mnemonicParsing="false" onAction="#variantDSelected" prefHeight="60.0" prefWidth="300.0" text="Variant D" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                                   <font>
-                                                      <Font name="Comic Sans MS" size="24.0" />
+                                                      <Font name="Arial Bold" size="27.0" />
                                                   </font>
                                               </Button>
                                           </children>

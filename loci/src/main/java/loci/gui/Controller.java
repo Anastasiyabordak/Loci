@@ -139,6 +139,34 @@ public class Controller implements Initializable {
         }
     }
 
+    public void checkAnswerForEnter(final KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER && trainingBySyllable.isSelected()) {
+            if(resultText.getFill().equals(Color.BLACK))
+            {
+                resultText.setFill(Color.GREEN);
+                selectAndStartTraining();
+            }
+            else
+            {
+                if(syllables.isEmpty()) {
+                    resultText.setFill(Color.GREEN);
+                    selectAndStartTraining();
+                }
+                else
+                {
+                    resultText.setFill(Color.BLACK);
+                    resultText.setText(card.getWord());
+                    isMistake = false;
+                    buttonVariantA.setDisable(true);
+                    buttonVariantB.setDisable(true);
+                    buttonVariantC.setDisable(true);
+                    buttonVariantD.setDisable(true);
+                }
+            }
+
+        }
+    }
+
     public void checkAnswer(final KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (!this.resultText.getText().equalsIgnoreCase("")) {
@@ -181,18 +209,22 @@ public class Controller implements Initializable {
 
     public void variantASelected(ActionEvent event) {
         analizeAnswer(buttonVariantA);
+        buttonVariantA.setDisable(true);
     }
 
     public void variantBSelected(ActionEvent event) {
         analizeAnswer(buttonVariantB);
+        buttonVariantB.setDisable(true);
     }
 
     public void variantCSelected(ActionEvent event) {
         analizeAnswer(buttonVariantC);
+        buttonVariantC.setDisable(true);
     }
 
     public void variantDSelected(ActionEvent event) {
         analizeAnswer(buttonVariantD);
+        buttonVariantD.setDisable(true);
     }
 
     public void analizeAnswer(Button button) {
@@ -200,19 +232,25 @@ public class Controller implements Initializable {
         {
             if(syllables.get(0).equalsIgnoreCase(button.getText()))
             {
+                button.setTextFill(Color.GREEN);
                 resultText.setText(resultText.getText() + syllables.remove(0));
             }
             else{
+                button.setTextFill(Color.RED);
                 resultText.setText(resultText.getText() + button.getText());
                 isMistake = true;
                 resultText.setFill(Color.RED);
+                buttonVariantA.setDisable(true);
+                buttonVariantB.setDisable(true);
+                buttonVariantC.setDisable(true);
+                buttonVariantD.setDisable(true);
             }
         }
-        else{
-            isMistake = false;
-            resultText.setFill(Color.GREEN);
-            selectAndStartTraining();
-        }
+//        else{
+//            isMistake = false;
+//            resultText.setFill(Color.GREEN);
+//            selectAndStartTraining();
+//        }
     }
 
     public void selectAndStartTraining() {
@@ -244,12 +282,18 @@ public class Controller implements Initializable {
 
     public void setSyllablesInButtons( List<String> sortebSyllables)
     {
+        buttonVariantC.setVisible(true);
+        buttonVariantD.setVisible(true);                 //TODO: перенести в нужное место
         buttonVariantA.setText(sortebSyllables.remove(0));
         buttonVariantB.setText(sortebSyllables.remove(0));
         if(!sortebSyllables.isEmpty())
             buttonVariantC.setText(sortebSyllables.remove(0));
+        else
+            buttonVariantC.setVisible(false);
         if(!sortebSyllables.isEmpty())
             buttonVariantD.setText(sortebSyllables.remove(0));
+        else
+            buttonVariantD.setVisible(false);
     }
 
     public void enterWordByImageAndDefinitionTraining() {
@@ -301,6 +345,14 @@ public class Controller implements Initializable {
     }
 
     public void setAllWidgetsUnvisible() {
+        buttonVariantA.setTextFill(Color.BLACK);
+        buttonVariantB.setTextFill(Color.BLACK);
+        buttonVariantC.setTextFill(Color.BLACK);
+        buttonVariantD.setTextFill(Color.BLACK);
+        buttonVariantA.setDisable(false);
+        buttonVariantB.setDisable(false);
+        buttonVariantC.setDisable(false);
+        buttonVariantD.setDisable(false);
         this.gridForButtons.setVisible(false);
         this.questionTextArea.setVisible(false);
         this.questionImage.setVisible(false);
