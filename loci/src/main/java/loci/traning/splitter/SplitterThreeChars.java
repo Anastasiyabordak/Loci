@@ -13,7 +13,7 @@ public class SplitterThreeChars implements Splitter {
         int endIndex = beginIndex +1;
 
         List<String> splitted = new ArrayList<>();
-        splitted.add(word.substring(beginIndex, endIndex));
+        splitted.add(word.substring(beginIndex, endIndex + 1));
         splitted.add(word.replaceFirst(splitted.get(0), ""));
         return splitted;
     }
