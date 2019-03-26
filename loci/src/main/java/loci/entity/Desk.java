@@ -1,4 +1,4 @@
-package loci.desk;
+package loci.entity;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

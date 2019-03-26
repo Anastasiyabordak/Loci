@@ -1,7 +1,6 @@
 package loci.gui;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.StageStyle;
-import loci.desk.Desk;
+import loci.entity.Desk;
 import loci.entity.Card;
 import loci.exception.CustomException;
 
@@ -26,7 +25,6 @@ import loci.parser.DatabaseCreator;
 import loci.traning.EnterWord;
 import loci.traning.WordFromParts;
 
-import javax.management.ObjectName;
 import java.net.URL;
 import java.util.*;
 
