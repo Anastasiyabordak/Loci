@@ -12,6 +12,7 @@ Java, MySQL
 # [PlanningPocker](https://play.planningpoker.com/play/game/YjlRoLAd1b59TqEGoOXF4dw8fAMCyyUt)
 # [Выбор названия](https://goo.gl/forms/aYxLI051cNnhsHCr1)
 # [Плохой скрам-мастер](https://goo.gl/forms/62OnkV5bjACXl06I2)
+# [Парное программирование](https://github.com/Anastasiyabordak/Loci/blob/master/pair_programming.md)
 # Спринты
 * 09.02.2019 - 02.03.2019 Создание тренировки описание-слово, а также просмотра карточек
 * 02.03.2019 - 23.03.2019
@@ -19,8 +20,8 @@ Java, MySQL
 * 16.04.2019 - 04.05.2019
 
 
-~/testProgect/src/sample/cards/- директория описания карточек, где каждый файл - все карточки одной категории, имя файла - название категории
-all.txt - файл, где хранятся имена файлов всех категорий
-Формат записи карточки:
-"card_id", "card_name", "card_definition", "image_location"
-~/testProgect/src/sample/image/ - директория, где хранятся все изображения,название директории - название категории
+~/testProgect/src/sample/cards/- директория описания карточек, где каждый файл - все карточки одной категории, имя файла - название категории <br> 
+all.txt - файл, где хранятся имена файлов всех категорий <br> 
+Формат записи карточки: <br> 
+"card_id", "card_name", "card_definition", "image_location" <br> 
+~/testProgect/src/sample/image/ - директория, где хранятся все изображения,название директории - название категории <br> 
