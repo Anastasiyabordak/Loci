@@ -28,6 +28,8 @@ import loci.traning.WordFromParts;
 import java.net.URL;
 import java.util.*;
 
+import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
+
 
 public class Controller implements Initializable {
 
@@ -175,9 +177,14 @@ public class Controller implements Initializable {
                 selectAndStartTraining();
             } else {
                 if (answerTextArea.getText().equalsIgnoreCase(card.getWord()))
+                {
                     this.answerTextArea.setStyle("-fx-text-fill: green");
-                else
+                    this.resultText.setFill(Color.GREEN);
+                }
+                else if(!answerTextArea.getText().equalsIgnoreCase("")){
                     this.answerTextArea.setStyle("-fx-text-fill: red");
+                    this.resultText.setFill(Color.GREEN);
+                }
                 this.answerTextArea.setEditable(false);
                 this.resultText.setText(card.getWord());
                 this.resultText.setVisible(true);
@@ -280,8 +287,6 @@ public class Controller implements Initializable {
 
     public void setSyllablesInButtons( List<String> sortebSyllables)
     {
-        buttonVariantC.setVisible(true);
-        buttonVariantD.setVisible(true);                 //TODO: перенести в нужное место
         buttonVariantA.setText(sortebSyllables.remove(0));
         buttonVariantB.setText(sortebSyllables.remove(0));
         if(!sortebSyllables.isEmpty())
@@ -328,10 +333,17 @@ public class Controller implements Initializable {
         this.questionImage.setVisible(true);
         this.resultText.setVisible(true);
         this.gridForButtons.setVisible(true);
+        buttonVariantC.setVisible(true);
+        buttonVariantD.setVisible(true);
+        buttonVariantA.setTextFill(Color.BLACK);
+        buttonVariantB.setTextFill(Color.BLACK);
+        buttonVariantC.setTextFill(Color.BLACK);
+        buttonVariantD.setTextFill(Color.BLACK);
     }
 
     public void prepareScreenForEnterTraining()
     {
+        this.resultText.setFill(Color.BLACK);
         this.answerTextArea.setText("");
         this.resultText.setText("");
         this.questionTextArea.setText("");
@@ -340,13 +352,10 @@ public class Controller implements Initializable {
         this.questionImage.setVisible(true);
         this.answerTextArea.setVisible(true);
         this.resultText.setVisible(true);
+        this.answerTextArea.setEditable(true);
     }
 
     public void setAllWidgetsUnvisible() {
-        buttonVariantA.setTextFill(Color.BLACK);
-        buttonVariantB.setTextFill(Color.BLACK);
-        buttonVariantC.setTextFill(Color.BLACK);
-        buttonVariantD.setTextFill(Color.BLACK);
         buttonVariantA.setDisable(false);
         buttonVariantB.setDisable(false);
         buttonVariantC.setDisable(false);
@@ -373,6 +382,8 @@ public class Controller implements Initializable {
         });
         backTableColumn.setCellValueFactory(new PropertyValueFactory<>("word"));
         frontTableColumn.setCellValueFactory(new PropertyValueFactory<>("definition"));
+        backTableColumn.setResizable(false);
+        frontTableColumn.setResizable(false);
         tableViev.setItems(new Desk().setCardsList());
 
     }
