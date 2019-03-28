@@ -15,7 +15,18 @@ public class SplitterThreeChars implements Splitter {
         List<String> splitted = new ArrayList<>();
         splitted.add(word.substring(beginIndex, endIndex + 1));
         splitted.add(word.replaceFirst(splitted.get(0), ""));
-        return splitted;
+        if (beginIndex > 0) {
+            return makeRightSillabSquence(splitted);
+        } else {
+            return splitted;
+        }
+    }
+
+    private List<String> makeRightSillabSquence (List<String> splitted) {
+        List<String> rightSplit = new ArrayList<>();
+        rightSplit.add(splitted.get(1));
+        rightSplit.add(splitted.get(0));
+        return rightSplit;
     }
 
     private int getPartForForParseWord() {
