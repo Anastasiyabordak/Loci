@@ -7,7 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public final class Database {
+public final class
+Database {
 
     private static Database database;
     private final Map<String, List<Card>> dataMap;

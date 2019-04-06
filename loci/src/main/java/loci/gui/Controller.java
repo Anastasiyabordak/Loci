@@ -22,11 +22,8 @@ import loci.entity.Card;
 import loci.exception.CustomException;
 
 import loci.parser.DatabaseCreator;
-import loci.traning.ChooseOneOfFour;
 import loci.traning.EnterWord;
 import loci.traning.WordFromParts;
-import org.apache.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 import java.net.URL;
 import java.util.*;
@@ -36,14 +33,7 @@ import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
 
 public class Controller implements Initializable {
 
-    /**
-     * Value of the object Logger for debug.
-     */
-    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
-
     //Tab of "Training"
-    @FXML
-    private Tab trainTab;
     @FXML
     private AnchorPane trainingPane;
     @FXML
@@ -66,8 +56,6 @@ public class Controller implements Initializable {
     @FXML
     private Button buttonVariantD;
     @FXML
-    private Button goToSettingsButton;
-    @FXML
     private GridPane gridForButtons;
     //Settings for training
     @FXML
@@ -78,12 +66,7 @@ public class Controller implements Initializable {
     private RadioButton trainingByDefinition;
     @FXML
     private RadioButton trainingBySyllable;
-    @FXML
-    private Button startTrainingButton;
 
-    //Tab of "Desk"
-    @FXML
-    private Tab deskTab;
     @FXML
     private ComboBox categoryOfCardBox; //тут все текущие словари
     @FXML
@@ -92,8 +75,6 @@ public class Controller implements Initializable {
     private TableColumn<Card, String> backTableColumn;
     @FXML
     private TableColumn<Card, String> frontTableColumn;
-    @FXML
-    private TableColumn statusTableColumn;
     @FXML
     private ImageView deskQuestionImage;
 
@@ -105,12 +86,6 @@ public class Controller implements Initializable {
     private List<String> syllables;
     private boolean isMistake = false;
 
-    //Tab of "Help"
-    @FXML
-    private Tab helpTab;
-    @FXML
-    private TextArea helpInformationTextArea;
-
     @FXML
     public void initialize(final URL location, final ResourceBundle resources) {
 
@@ -121,19 +96,15 @@ public class Controller implements Initializable {
             creator.createDatabase();
 
         } catch (CustomException e) {
-            LOGGER.error(e);
-            //e.printStackTrace();
+            e.printStackTrace();
         }
-
         deskQuestionImage.setImage(startImage);
-
         setDesk();
         setCategoryOfCardBox();
         createToggleGroup();
-        
     }
 
-    public void createToggleGroup() {
+    private void createToggleGroup() {
         trainingByImageAndDefinition.setToggleGroup(trainingsGroup);
         trainingByImage.setToggleGroup(trainingsGroup);
         trainingByDefinition.setToggleGroup(trainingsGroup);
@@ -241,7 +212,7 @@ public class Controller implements Initializable {
         buttonVariantD.setDisable(true);
     }
 
-    public void analizeAnswer(Button button) {
+    private void analizeAnswer(Button button) {
         if(!syllables.isEmpty() && !isMistake)
         {
             if(syllables.get(0).equalsIgnoreCase(button.getText()))
@@ -260,14 +231,9 @@ public class Controller implements Initializable {
                 buttonVariantD.setDisable(true);
             }
         }
-//        else{
-//            isMistake = false;
-//            resultText.setFill(Color.GREEN);
-//            selectAndStartTraining();
-//        }
     }
 
-    public void selectAndStartTraining() {
+    private void selectAndStartTraining() {
         setAllWidgetsUnvisible();
         changeCard();
         if(trainingByImageAndDefinition.isSelected())
@@ -281,20 +247,19 @@ public class Controller implements Initializable {
 
     }
 
-    public void buttonsTrainingBySyllable()
+    private void buttonsTrainingBySyllable()
     {
         prepareScreenForButtonsTraining();
         WordFromParts wordFromParts = new WordFromParts();
         syllables = wordFromParts.wordSplit(card);
-        List<String> sortedSyllables = new ArrayList<>();
-        sortedSyllables.addAll(syllables);
+        List<String> sortedSyllables = new ArrayList<>(syllables);
         questionTextArea.setText(card.getDefinition());
         questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
-        Collections.sort(sortedSyllables, Comparator.comparing(Object::toString));
+        sortedSyllables.sort(Comparator.comparing(Object::toString));
         setSyllablesInButtons(sortedSyllables);
     }
 
-    public void setSyllablesInButtons( List<String> sortebSyllables)
+    private void setSyllablesInButtons( List<String> sortebSyllables)
     {
         buttonVariantA.setText(sortebSyllables.remove(0));
         buttonVariantB.setText(sortebSyllables.remove(0));
@@ -308,28 +273,28 @@ public class Controller implements Initializable {
             buttonVariantD.setVisible(false);
     }
 
-    public void enterWordByImageAndDefinitionTraining() {
+    private void enterWordByImageAndDefinitionTraining() {
         prepareScreenForEnterTraining();
         this.questionTextArea.setText(card.getDefinition());
         questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
     }
 
-    public void enterWordByDefinitionTraining() {
+    private void enterWordByDefinitionTraining() {
         prepareScreenForEnterTraining();
         this.questionTextArea.setText(card.getDefinition());
     }
 
-    public void enterWordByImageTraining() {
+    private void enterWordByImageTraining() {
         prepareScreenForEnterTraining();
         questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
     }
 
-    public void changeCard() {
+    private void changeCard() {
         String category = enterWord.chooseCategory();
         card = enterWord.chooseCard(category);
     }
 
-    public void prepareScreenForButtonsTraining()
+    private void prepareScreenForButtonsTraining()
     {
         this.resultText.setText("");
         this.questionTextArea.setText("");
@@ -348,11 +313,9 @@ public class Controller implements Initializable {
         buttonVariantB.setTextFill(Color.BLACK);
         buttonVariantC.setTextFill(Color.BLACK);
         buttonVariantD.setTextFill(Color.BLACK);
-        resultText.setFill(Color.GREEN);
-        isMistake = false;
     }
 
-    public void prepareScreenForEnterTraining()
+    private void prepareScreenForEnterTraining()
     {
         this.resultText.setFill(Color.BLACK);
         this.answerTextArea.setText("");
@@ -366,7 +329,7 @@ public class Controller implements Initializable {
         this.answerTextArea.setEditable(true);
     }
 
-    public void setAllWidgetsUnvisible() {
+    private void setAllWidgetsUnvisible() {
         buttonVariantA.setDisable(false);
         buttonVariantB.setDisable(false);
         buttonVariantC.setDisable(false);
@@ -378,7 +341,7 @@ public class Controller implements Initializable {
         this.resultText.setVisible(false);
     }
 
-    public void setDesk() {
+    private void setDesk() {
 
         frontTableColumn.setCellValueFactory(cellData -> (new SimpleStringProperty()));
         frontTableColumn.setCellFactory(param -> {
@@ -399,7 +362,7 @@ public class Controller implements Initializable {
 
     }
 
-    public void setCategoryOfCardBox() {
+    private void setCategoryOfCardBox() {
         categoryOfCardBox.setItems(new Desk().setCategoryList());
     }
 
@@ -411,15 +374,13 @@ public class Controller implements Initializable {
             dialog.initStyle(StageStyle.UTILITY);
             dialog.setTitle("IMAGE");
 
-            ImageView img = new ImageView();
-            img.setImage(deskQuestionImage.getImage()); 
+            ImageView img = new ImageView(deskQuestionImage.getImage());
             img.setPreserveRatio(true);
             img.setFitHeight(700);
             img.setFitWidth(500);
 
-            BorderPane pane = new BorderPane();
+            BorderPane pane = new BorderPane(img);
             pane.setPrefSize(300, 400);
-            pane.setCenter(img);
             dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
             dialog.getDialogPane().setGraphic(pane);
             dialog.showAndWait();
