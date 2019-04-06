@@ -22,6 +22,7 @@ import loci.entity.Card;
 import loci.exception.CustomException;
 
 import loci.parser.DatabaseCreator;
+import loci.traning.ChooseOneOfFour;
 import loci.traning.EnterWord;
 import loci.traning.WordFromParts;
 
@@ -63,6 +64,8 @@ public class Controller implements Initializable {
     private RadioButton trainingByDefinition;
     @FXML
     private RadioButton trainingBySyllable;
+    @FXML
+    private RadioButton trainingByChoosingTheAnswer;
 
     @FXML
     private ComboBox categoryOfCardBox; //тут все текущие словари
@@ -86,7 +89,6 @@ public class Controller implements Initializable {
     private Card card;
     private ToggleGroup trainingsGroup = new ToggleGroup();
     private List<String> syllables;
-    private boolean isMistake = false;
 
 
     @FXML
@@ -112,7 +114,8 @@ public class Controller implements Initializable {
         trainingByImage.setToggleGroup(trainingsGroup);
         trainingByDefinition.setToggleGroup(trainingsGroup);
         trainingBySyllable.setToggleGroup(trainingsGroup);
-        trainingByDefinition.setSelected(true);
+        trainingByChoosingTheAnswer.setToggleGroup(trainingsGroup);
+        trainingByImageAndDefinition.setSelected(true);
     }
 
     public void getImage(final MouseEvent event) {
@@ -124,22 +127,32 @@ public class Controller implements Initializable {
     }
 
     public void checkAnswerForEnter(final KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER && trainingBySyllable.isSelected()) {
-            if (resultText.getFill().equals(Color.BLACK)) {
-                resultText.setFill(Color.GREEN);
-                selectAndStartTraining();
-            } else {
-                if (syllables.isEmpty()) {
-                    resultText.setFill(Color.GREEN);
-                    selectAndStartTraining();
-                } else {
-                    resultText.setFill(Color.BLACK);
-                    resultText.setText(card.getWord());
-                    isMistake = false;
-                    setDisableButtons(true);
-                }
+        if (event.getCode() == KeyCode.ENTER) {
+            if (trainingBySyllable.isSelected()) {
+                checkSyllableTraining();
+            } else if (trainingByChoosingTheAnswer.isSelected()) {
+                checkChoosingTraining();
             }
+        }
+    }
 
+    public void checkSyllableTraining() {
+        if (!resultText.getText().equals("") && !syllables.isEmpty() && !resultText.getFill().equals(Color.BLACK)) {
+                resultText.setFill(Color.BLACK);
+                resultText.setText(card.getWord());
+                setDisableButtons(true);
+        } else if (resultText.getText().equals("")) {
+            resultText.setText(card.getWord());
+        } else {
+            selectAndStartTraining();
+        }
+    }
+
+    public void checkChoosingTraining() {
+        if (resultText.getText().equals("")) {
+            resultText.setText(card.getWord());
+        } else {
+            selectAndStartTraining();
         }
     }
 
@@ -186,30 +199,56 @@ public class Controller implements Initializable {
     }
 
     public void variantASelected(ActionEvent event) {
-        analizeAnswer(buttonVariantA);
+        if (trainingBySyllable.isSelected()) {
+            analizeAnswerInSyllableTraining(buttonVariantA);
+        } else if (trainingByChoosingTheAnswer.isSelected()) {
+            analizeAnswerInChoosingTraining(buttonVariantA);
+        }
     }
 
     public void variantBSelected(ActionEvent event) {
-        analizeAnswer(buttonVariantB);
+        if (trainingBySyllable.isSelected()) {
+            analizeAnswerInSyllableTraining(buttonVariantB);
+        } else if (trainingByChoosingTheAnswer.isSelected()) {
+            analizeAnswerInChoosingTraining(buttonVariantB);
+        }
     }
 
     public void variantCSelected(ActionEvent event) {
-        analizeAnswer(buttonVariantC);
+        if (trainingBySyllable.isSelected()) {
+            analizeAnswerInSyllableTraining(buttonVariantC);
+        } else if (trainingByChoosingTheAnswer.isSelected()) {
+            analizeAnswerInChoosingTraining(buttonVariantC);
+        }
     }
 
     public void variantDSelected(ActionEvent event) {
-        analizeAnswer(buttonVariantD);
+        if (trainingBySyllable.isSelected()) {
+            analizeAnswerInSyllableTraining(buttonVariantD);
+        } else if (trainingByChoosingTheAnswer.isSelected()) {
+            analizeAnswerInChoosingTraining(buttonVariantD);
+        }
     }
 
-    private void analizeAnswer(Button button) {
-        if (!syllables.isEmpty() && !isMistake) {
-            if (syllables.get(0).equalsIgnoreCase(button.getText())) {
+    private void analizeAnswerInChoosingTraining(Button button) {
+        if (button.getText().equalsIgnoreCase(card.getWord())) {
+            button.setTextFill(Color.GREEN);
+        } else {
+            button.setTextFill(Color.RED);
+        }
+        resultText.setText(card.getWord());
+        resultText.setFill(Color.GREEN);
+    }
+
+    private void analizeAnswerInSyllableTraining(Button button) {
+        if (!syllables.isEmpty()) {
+            if (syllables.get(0).equals(button.getText())) {
                 button.setTextFill(Color.GREEN);
+                resultText.setFill(Color.GREEN);
                 resultText.setText(resultText.getText() + syllables.remove(0));
             } else {
                 button.setTextFill(Color.RED);
                 resultText.setText(resultText.getText() + button.getText());
-                isMistake = true;
                 resultText.setFill(Color.RED);
                 setDisableButtons(true);
             }
@@ -228,7 +267,18 @@ public class Controller implements Initializable {
             enterWordByDefinitionTraining();
         if (trainingBySyllable.isSelected())
             buttonsTrainingBySyllable();
+        if (trainingByChoosingTheAnswer.isSelected())
+            buttonsTrainingByChoosingTheAnswer();
 
+    }
+
+    private void buttonsTrainingByChoosingTheAnswer() {
+        prepareScreenForButtonsTraining();
+        ChooseOneOfFour chooseOneOfFour = new ChooseOneOfFour();
+        List<String> words = chooseOneOfFour.getListOfWords(card);
+        questionTextArea.setText(card.getDefinition());
+        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
+        setAnswersInButtons(words);
     }
 
     private void buttonsTrainingBySyllable() {
@@ -239,18 +289,19 @@ public class Controller implements Initializable {
         questionTextArea.setText(card.getDefinition());
         questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
         wordFromParts.mixWordParts(sortedSyllables);
-        setSyllablesInButtons(sortedSyllables);
+        setAnswersInButtons(sortedSyllables);
     }
 
-    private void setSyllablesInButtons(List<String> sortebSyllables) {
-        buttonVariantA.setText(sortebSyllables.remove(0));
-        buttonVariantB.setText(sortebSyllables.remove(0));
-        if (!sortebSyllables.isEmpty())
-            buttonVariantC.setText(sortebSyllables.remove(0));
+
+    private void setAnswersInButtons(List<String> answers) {
+        buttonVariantA.setText(answers.remove(0));
+        buttonVariantB.setText(answers.remove(0));
+        if (!answers.isEmpty())
+            buttonVariantC.setText(answers.remove(0));
         else
             buttonVariantC.setVisible(false);
-        if (!sortebSyllables.isEmpty())
-            buttonVariantD.setText(sortebSyllables.remove(0));
+        if (!answers.isEmpty())
+            buttonVariantD.setText(answers.remove(0));
         else
             buttonVariantD.setVisible(false);
     }
@@ -296,7 +347,7 @@ public class Controller implements Initializable {
     }
 
     private void prepareScreen() {
-        this.resultText.setFill(Color.GREEN);
+        this.resultText.setFill(Color.BLACK);
         this.resultText.setText("");
         this.resultText.setVisible(true);
         this.questionTextArea.setText("");
