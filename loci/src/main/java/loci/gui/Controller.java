@@ -28,9 +28,6 @@ import loci.traning.WordFromParts;
 import java.net.URL;
 import java.util.*;
 
-import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
-
-
 public class Controller implements Initializable {
 
     //Tab of "Training"
@@ -78,19 +75,25 @@ public class Controller implements Initializable {
     @FXML
     private ImageView deskQuestionImage;
 
+    private final String SUBSTRING_PATH = "src/main/resources/";
+    private final Image START_IMAGE = new Image("images/question.png");
+    private final String RED_COLOR = "-fx-text-fill: red";
+    private final String BLACK_COLOR = "-fx-text-fill: black";
+    private final String GREEN_COLOR = "-fx-text-fill: green";
+
+
     private EnterWord enterWord = new EnterWord();
     private Card card;
-    private Image startImage = new Image("images/question.png");
-    private int substringPath = 19;
     private ToggleGroup trainingsGroup = new ToggleGroup();
     private List<String> syllables;
     private boolean isMistake = false;
+
 
     @FXML
     public void initialize(final URL location, final ResourceBundle resources) {
 
         setAllWidgetsUnvisible();
-        questionImage.setImage(startImage);
+        questionImage.setImage(START_IMAGE);
         try {
             DatabaseCreator creator = new DatabaseCreator();
             creator.createDatabase();
@@ -98,7 +101,7 @@ public class Controller implements Initializable {
         } catch (CustomException e) {
             e.printStackTrace();
         }
-        deskQuestionImage.setImage(startImage);
+
         setDesk();
         setCategoryOfCardBox();
         createToggleGroup();
@@ -109,38 +112,31 @@ public class Controller implements Initializable {
         trainingByImage.setToggleGroup(trainingsGroup);
         trainingByDefinition.setToggleGroup(trainingsGroup);
         trainingBySyllable.setToggleGroup(trainingsGroup);
+        trainingByDefinition.setSelected(true);
     }
 
     public void getImage(final MouseEvent event) {
         Card selectedCard;
         selectedCard = tableViev.getSelectionModel().getSelectedItem();
         if (selectedCard != null) {
-            deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(substringPath))); //WTF 19?
+            deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(SUBSTRING_PATH.length()))); //WTF 19?
         }
     }
 
     public void checkAnswerForEnter(final KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER && trainingBySyllable.isSelected()) {
-            if(resultText.getFill().equals(Color.BLACK))
-            {
+            if (resultText.getFill().equals(Color.BLACK)) {
                 resultText.setFill(Color.GREEN);
                 selectAndStartTraining();
-            }
-            else
-            {
-                if(syllables.isEmpty()) {
+            } else {
+                if (syllables.isEmpty()) {
                     resultText.setFill(Color.GREEN);
                     selectAndStartTraining();
-                }
-                else
-                {
+                } else {
                     resultText.setFill(Color.BLACK);
                     resultText.setText(card.getWord());
                     isMistake = false;
-                    buttonVariantA.setDisable(true);
-                    buttonVariantB.setDisable(true);
-                    buttonVariantC.setDisable(true);
-                    buttonVariantD.setDisable(true);
+                    setDisableButtons(true);
                 }
             }
 
@@ -151,20 +147,17 @@ public class Controller implements Initializable {
         if (event.getCode() == KeyCode.ENTER) {
             if (!this.resultText.getText().equalsIgnoreCase("")) {
                 this.answerTextArea.setText("");
-                this.answerTextArea.setStyle("-fx-text-fill: black"); //please make private constant "-fx-text-fill" and "black"
+                this.answerTextArea.setStyle(BLACK_COLOR);
                 this.answerTextArea.setEditable(true);
                 this.resultText.setVisible(false);
                 selectAndStartTraining();
             } else {
-                if (answerTextArea.getText().equalsIgnoreCase(card.getWord()))
-                {
-                    this.answerTextArea.setStyle("-fx-text-fill: green");
-                    this.resultText.setFill(Color.GREEN);
+                if (enterWord.checkEnteredWord(card, answerTextArea.getText())) {
+                    this.answerTextArea.setStyle(GREEN_COLOR);
+                } else if (!answerTextArea.getText().equalsIgnoreCase("")) {
+                    this.answerTextArea.setStyle(RED_COLOR);
                 }
-                else if(!answerTextArea.getText().equalsIgnoreCase("")){
-                    this.answerTextArea.setStyle("-fx-text-fill: red");
-                    this.resultText.setFill(Color.GREEN);
-                }
+                this.resultText.setFill(Color.GREEN);
                 this.answerTextArea.setEditable(false);
                 this.resultText.setText(card.getWord());
                 this.resultText.setVisible(true);
@@ -185,7 +178,7 @@ public class Controller implements Initializable {
 
     public void changeCardsOfCategory(final ActionEvent event) {
         String category = categoryOfCardBox.getValue().toString();
-        deskQuestionImage.setImage(startImage);
+        deskQuestionImage.setImage(START_IMAGE);
         if (category.equalsIgnoreCase("all"))
             tableViev.setItems(new Desk().setCardsList());
         else
@@ -194,80 +187,69 @@ public class Controller implements Initializable {
 
     public void variantASelected(ActionEvent event) {
         analizeAnswer(buttonVariantA);
-        buttonVariantA.setDisable(true);
     }
 
     public void variantBSelected(ActionEvent event) {
         analizeAnswer(buttonVariantB);
-        buttonVariantB.setDisable(true);
     }
 
     public void variantCSelected(ActionEvent event) {
         analizeAnswer(buttonVariantC);
-        buttonVariantC.setDisable(true);
     }
 
     public void variantDSelected(ActionEvent event) {
         analizeAnswer(buttonVariantD);
-        buttonVariantD.setDisable(true);
     }
 
     private void analizeAnswer(Button button) {
-        if(!syllables.isEmpty() && !isMistake)
-        {
-            if(syllables.get(0).equalsIgnoreCase(button.getText()))
-            {
+        if (!syllables.isEmpty() && !isMistake) {
+            if (syllables.get(0).equalsIgnoreCase(button.getText())) {
                 button.setTextFill(Color.GREEN);
                 resultText.setText(resultText.getText() + syllables.remove(0));
-            }
-            else{
+            } else {
                 button.setTextFill(Color.RED);
                 resultText.setText(resultText.getText() + button.getText());
                 isMistake = true;
                 resultText.setFill(Color.RED);
-                buttonVariantA.setDisable(true);
-                buttonVariantB.setDisable(true);
-                buttonVariantC.setDisable(true);
-                buttonVariantD.setDisable(true);
+                setDisableButtons(true);
             }
         }
+        button.setDisable(true);
     }
 
     private void selectAndStartTraining() {
         setAllWidgetsUnvisible();
         changeCard();
-        if(trainingByImageAndDefinition.isSelected())
+        if (trainingByImageAndDefinition.isSelected())
             enterWordByImageAndDefinitionTraining();
-        if(trainingByImage.isSelected())
+        if (trainingByImage.isSelected())
             enterWordByImageTraining();
-        if(trainingByDefinition.isSelected())
+        if (trainingByDefinition.isSelected())
             enterWordByDefinitionTraining();
-        if(trainingBySyllable.isSelected())
+        if (trainingBySyllable.isSelected())
             buttonsTrainingBySyllable();
 
     }
 
-    private void buttonsTrainingBySyllable()
-    {
+    private void buttonsTrainingBySyllable() {
         prepareScreenForButtonsTraining();
         WordFromParts wordFromParts = new WordFromParts();
         syllables = wordFromParts.wordSplit(card);
         List<String> sortedSyllables = new ArrayList<>(syllables);
         questionTextArea.setText(card.getDefinition());
-        questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
-        sortedSyllables.sort(Comparator.comparing(Object::toString));
+        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
+        wordFromParts.mixWordParts(sortedSyllables);
         setSyllablesInButtons(sortedSyllables);
     }
 
-    private void setSyllablesInButtons( List<String> sortebSyllables)
-    {
+    private void setSyllablesInButtons(List<String> sortebSyllables) {
         buttonVariantA.setText(sortebSyllables.remove(0));
         buttonVariantB.setText(sortebSyllables.remove(0));
-        if(!sortebSyllables.isEmpty())
+        if (!sortebSyllables.isEmpty())
             buttonVariantC.setText(sortebSyllables.remove(0));
         else
             buttonVariantC.setVisible(false);
-        if(!sortebSyllables.isEmpty())
+        if (!sortebSyllables.isEmpty())
             buttonVariantD.setText(sortebSyllables.remove(0));
         else
             buttonVariantD.setVisible(false);
@@ -276,7 +258,7 @@ public class Controller implements Initializable {
     private void enterWordByImageAndDefinitionTraining() {
         prepareScreenForEnterTraining();
         this.questionTextArea.setText(card.getDefinition());
-        questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
+        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
     }
 
     private void enterWordByDefinitionTraining() {
@@ -286,7 +268,7 @@ public class Controller implements Initializable {
 
     private void enterWordByImageTraining() {
         prepareScreenForEnterTraining();
-        questionImage.setImage(new Image(card.getPicturePath().substring(substringPath)));
+        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
     }
 
     private void changeCard() {
@@ -294,46 +276,37 @@ public class Controller implements Initializable {
         card = enterWord.chooseCard(category);
     }
 
-    private void prepareScreenForButtonsTraining()
-    {
-        this.resultText.setText("");
-        this.questionTextArea.setText("");
+    private void prepareScreenForButtonsTraining() {
+        prepareScreen();
         this.buttonVariantA.setText("");
         this.buttonVariantB.setText("");
         this.buttonVariantC.setText("");
         this.buttonVariantD.setText("");
-        this.questionImage.setImage(startImage);
-        this.questionTextArea.setVisible(true);
-        this.questionImage.setVisible(true);
-        this.resultText.setVisible(true);
+        setTextFillButtons(Color.BLACK);
         this.gridForButtons.setVisible(true);
         buttonVariantC.setVisible(true);
         buttonVariantD.setVisible(true);
-        buttonVariantA.setTextFill(Color.BLACK);
-        buttonVariantB.setTextFill(Color.BLACK);
-        buttonVariantC.setTextFill(Color.BLACK);
-        buttonVariantD.setTextFill(Color.BLACK);
     }
 
-    private void prepareScreenForEnterTraining()
-    {
-        this.resultText.setFill(Color.BLACK);
+    private void prepareScreenForEnterTraining() {
+        prepareScreen();
         this.answerTextArea.setText("");
-        this.resultText.setText("");
-        this.questionTextArea.setText("");
-        this.questionImage.setImage(startImage);
-        this.questionTextArea.setVisible(true);
-        this.questionImage.setVisible(true);
         this.answerTextArea.setVisible(true);
-        this.resultText.setVisible(true);
         this.answerTextArea.setEditable(true);
     }
 
+    private void prepareScreen() {
+        this.resultText.setFill(Color.GREEN);
+        this.resultText.setText("");
+        this.resultText.setVisible(true);
+        this.questionTextArea.setText("");
+        this.questionTextArea.setVisible(true);
+        this.questionImage.setImage(START_IMAGE);
+        this.questionImage.setVisible(true);
+    }
+
     private void setAllWidgetsUnvisible() {
-        buttonVariantA.setDisable(false);
-        buttonVariantB.setDisable(false);
-        buttonVariantC.setDisable(false);
-        buttonVariantD.setDisable(false);
+        setDisableButtons(false);
         this.gridForButtons.setVisible(false);
         this.questionTextArea.setVisible(false);
         this.questionImage.setVisible(false);
@@ -362,13 +335,27 @@ public class Controller implements Initializable {
 
     }
 
+    public void setTextFillButtons(Color color) {
+        buttonVariantA.setTextFill(color);
+        buttonVariantB.setTextFill(color);
+        buttonVariantC.setTextFill(color);
+        buttonVariantD.setTextFill(color);
+    }
+
+    public void setDisableButtons(boolean isDisable) {
+        buttonVariantA.setDisable(isDisable);
+        buttonVariantB.setDisable(isDisable);
+        buttonVariantC.setDisable(isDisable);
+        buttonVariantD.setDisable(isDisable);
+    }
+
     private void setCategoryOfCardBox() {
         categoryOfCardBox.setItems(new Desk().setCategoryList());
     }
 
     public void openImageDesk(MouseEvent event) {
 
-        if (deskQuestionImage.getImage() != startImage) {
+        if (deskQuestionImage.getImage() != START_IMAGE) {
 
             Alert dialog = new Alert(Alert.AlertType.NONE);
             dialog.initStyle(StageStyle.UTILITY);
