@@ -12,9 +12,10 @@ public class ChooseOneOfFour extends Training{
 
     public List<String> getListOfWords(Card card) {
         List<String> words = new ArrayList<>();
+        words.add(card.getWord());
         while (words.size() < NUMBER_OF_WORDS_REQUIRED) {
             String word = this.chooseCard(this.chooseCategory()).getWord();
-            if (!word.equals(card.getWord())) {
+            if (!words.contains(word)) {
                 words.add(word);
             }
             Collections.shuffle(words);

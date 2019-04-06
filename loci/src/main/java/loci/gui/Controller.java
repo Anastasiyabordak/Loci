@@ -22,8 +22,11 @@ import loci.entity.Card;
 import loci.exception.CustomException;
 
 import loci.parser.DatabaseCreator;
+import loci.traning.ChooseOneOfFour;
 import loci.traning.EnterWord;
 import loci.traning.WordFromParts;
+import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.net.URL;
 import java.util.*;
@@ -32,6 +35,11 @@ import static javafx.scene.control.TableView.CONSTRAINED_RESIZE_POLICY;
 
 
 public class Controller implements Initializable {
+
+    /**
+     * Value of the object Logger for debug.
+     */
+    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
     //Tab of "Training"
     @FXML
@@ -113,7 +121,8 @@ public class Controller implements Initializable {
             creator.createDatabase();
 
         } catch (CustomException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
+            //e.printStackTrace();
         }
 
         deskQuestionImage.setImage(startImage);
@@ -121,7 +130,7 @@ public class Controller implements Initializable {
         setDesk();
         setCategoryOfCardBox();
         createToggleGroup();
-        //enterWordTraining();
+        
     }
 
     public void createToggleGroup() {
@@ -339,6 +348,8 @@ public class Controller implements Initializable {
         buttonVariantB.setTextFill(Color.BLACK);
         buttonVariantC.setTextFill(Color.BLACK);
         buttonVariantD.setTextFill(Color.BLACK);
+        resultText.setFill(Color.GREEN);
+        isMistake = false;
     }
 
     public void prepareScreenForEnterTraining()
