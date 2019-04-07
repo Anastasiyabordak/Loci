@@ -28,7 +28,7 @@ Database {
         return dataMap;
     }
 
-    public void addCategory(String category, List<Card> cards) {
+    public void addCategory(final String category, final List<Card> cards) {
         if (!cards.isEmpty()) {
             this.dataMap.put(category, cards);
         }
@@ -38,7 +38,7 @@ Database {
         return new ArrayList<>(dataMap.keySet());
     }
 
-    public List<Card> getCardsByCategory(String category) {
+    public List<Card> getCardsByCategory(final String category) {
         return this.dataMap.get(category);
     }
 

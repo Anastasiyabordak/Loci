@@ -8,9 +8,9 @@ public class SplitterThreeChars implements Splitter {
     private static final int RANDOM_BOUND = 2;
 
     @Override
-    public List<String> splitWord(String word) {
+    public List<String> splitWord(final String word) {
         int beginIndex = getPartForForParseWord();
-        int endIndex = beginIndex +1;
+        int endIndex = beginIndex + 1;
 
         List<String> splitted = new ArrayList<>();
         splitted.add(word.substring(beginIndex, endIndex + 1));
@@ -22,7 +22,7 @@ public class SplitterThreeChars implements Splitter {
         }
     }
 
-    private List<String> makeRightSillabSquence (List<String> splitted) {
+    private List<String> makeRightSillabSquence(final List<String> splitted) {
         List<String> rightSplit = new ArrayList<>();
         rightSplit.add(splitted.get(1));
         rightSplit.add(splitted.get(0));

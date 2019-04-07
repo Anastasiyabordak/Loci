@@ -13,10 +13,10 @@ public class DataFilesParser {
 
     private static final String SPLIT_CHAR = "\",\"";
     private static final int PICTURE_PATH_POSITION = 2;
-    public static final int WORD_POSITION = 0;
-    public static final int DEFINITION_POSITION = 1;
+    private static final int WORD_POSITION = 0;
+    private static final int DEFINITION_POSITION = 1;
 
-    public List<String[]> findValidInfoStrings(final List<String> fileLines) {
+    List<String[]> findValidInfoStrings(final List<String> fileLines) {
         Logger logger = LogManager.getLogger();
 
         DataValidator validator = new DataValidator();
@@ -28,12 +28,12 @@ public class DataFilesParser {
                 data[i] = data[i].replace("\"", "");
             }
             if (validator.rightNumberOfParams(data)
-                && validator.isEmptyParam(data)
-                && validator.isValidPicture(data[PICTURE_PATH_POSITION])) {
+                    && validator.isEmptyParam(data)
+                    && validator.isValidPicture(data[PICTURE_PATH_POSITION])) {
 
                 validDataStrings.add(data);
             } else {
-               logger.log(Level.INFO, "String <<"
+                logger.log(Level.INFO, "String <<"
                         + input
                         + ">> contains invalid data\n");
             }
@@ -41,11 +41,13 @@ public class DataFilesParser {
         return validDataStrings;
     }
 
-    public List<Card> createCardsFromValidData(
+    List<Card> createCardsFromValidData(
             final List<String[]> validDataStrings) {
         List<Card> cards = new ArrayList<>();
         for (String[] data : validDataStrings) {
-                cards.add(new Card(data[WORD_POSITION], data[DEFINITION_POSITION], data[PICTURE_PATH_POSITION]));
+            cards.add(new Card(data[WORD_POSITION],
+                    data[DEFINITION_POSITION],
+                    data[PICTURE_PATH_POSITION]));
         }
         return cards;
     }

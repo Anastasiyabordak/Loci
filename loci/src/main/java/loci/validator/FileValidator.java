@@ -6,7 +6,9 @@ import java.nio.file.Paths;
 
 public class FileValidator {
 
-    /** checks if file is empty.
+    /**
+     * checks if file is empty.
+     *
      * @param filePath path to checked file.
      * @return true if file is empty.
      * @throws IOException if something is wrong with filePath.
@@ -15,7 +17,9 @@ public class FileValidator {
         return Files.size(Paths.get(filePath)) == 0;
     }
 
-    /** checks if file exists.
+    /**
+     * checks if file exists.
+     *
      * @param filePath path to checked file.
      * @return true if file exists.
      */

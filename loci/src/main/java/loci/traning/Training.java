@@ -9,7 +9,7 @@ import java.util.Random;
 public class Training {
     private Database database = Database.getDatabase();
 
-    public Card chooseCard(String category) {
+    public Card chooseCard(final String category) {
         Random random = new Random(System.currentTimeMillis());
         List<Card> cards = database.getCardsByCategory(category);
 

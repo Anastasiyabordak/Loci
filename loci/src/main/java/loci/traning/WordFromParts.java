@@ -15,15 +15,15 @@ public class WordFromParts extends Training {
     private static final int WORD_FROM_THREE_LETTERS = 3;
     private static final int WORD_FROM_FOUR_LETTERS = 4;
 
-    public boolean validToSplit(Card card) {
+    public boolean validToSplit(final Card card) {
         return card.getWord().length() >= 1;
     }
 
-    public List<String> wordSplit(Card card) {
+    public List<String> wordSplit(final Card card) {
         return splitterSwitch(card.getWord());
     }
 
-    private List<String> splitterSwitch(String word) {
+    private List<String> splitterSwitch(final String word) {
         Splitter splitter;
 
         switch (word.length()) {
@@ -41,7 +41,7 @@ public class WordFromParts extends Training {
         return splitter.splitWord(word);
     }
 
-    public void mixWordParts(List splitted) {
-         Collections.shuffle(splitted);
+    public void mixWordParts(final List splitted) {
+        Collections.shuffle(splitted);
     }
 }

@@ -7,7 +7,7 @@ public class Card {
     private String definition;
     private String picturePath;
 
-    public Card(String word, String definition, String picturePath) {
+    public Card(final String word, final String definition, final String picturePath) {
         this.word = word;
         this.definition = definition;
         this.picturePath = picturePath;
@@ -17,7 +17,7 @@ public class Card {
         return word;
     }
 
-    public void setWord(String word) {
+    public void setWord(final String word) {
         this.word = word;
     }
 
@@ -25,7 +25,7 @@ public class Card {
         return definition;
     }
 
-    public void setDefinition(String definition) {
+    public void setDefinition(final String definition) {
         this.definition = definition;
     }
 
@@ -33,18 +33,22 @@ public class Card {
         return picturePath;
     }
 
-    public void setPicturePath(String picturePath) {
+    public void setPicturePath(final String picturePath) {
         this.picturePath = picturePath;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Card)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Card)) {
+            return false;
+        }
         Card card = (Card) o;
-        return getWord().equals(card.getWord()) &&
-                getDefinition().equals(card.getDefinition()) &&
-                getPicturePath().equals(card.getPicturePath());
+        return getWord().equals(card.getWord())
+                && getDefinition().equals(card.getDefinition())
+                && getPicturePath().equals(card.getPicturePath());
     }
 
     @Override
@@ -54,10 +58,10 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "word='" + word + '\'' +
-                ", definition='" + definition + '\'' +
-                ", picturePath='" + picturePath + '\'' +
-                '}';
+        return "Card{"
+                + "word='" + word + '\''
+                + ", definition='" + definition + '\''
+                + ", picturePath='" + picturePath + '\''
+                + '}';
     }
 }

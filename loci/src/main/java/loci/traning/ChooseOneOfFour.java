@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ChooseOneOfFour extends Training{
+public class ChooseOneOfFour extends Training {
 
     private static final int NUMBER_OF_WORDS_REQUIRED = 4;
 
-    public List<String> getListOfWords(Card card) {
+    public List<String> getListOfWords(final Card card) {
         List<String> words = new ArrayList<>();
         words.add(card.getWord());
         while (words.size() < NUMBER_OF_WORDS_REQUIRED) {

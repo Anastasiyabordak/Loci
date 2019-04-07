@@ -3,7 +3,7 @@ package loci.entity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import loci.database.Database;
-import loci.entity.Card;
+
 import java.util.List;
 
 public class Desk {

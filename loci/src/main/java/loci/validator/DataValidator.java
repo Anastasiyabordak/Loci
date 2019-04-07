@@ -18,7 +18,7 @@ public class DataValidator {
      */
     public boolean isEmptyParam(final String[] data) {
         for (String param : data) {
-            if(param.isEmpty()) {
+            if (param.isEmpty()) {
                 return false;
             }
         }
