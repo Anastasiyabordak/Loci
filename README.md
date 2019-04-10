@@ -13,6 +13,7 @@ Java, MySQL
 # [Выбор названия](https://goo.gl/forms/aYxLI051cNnhsHCr1)
 # [Плохой скрам-мастер](https://goo.gl/forms/62OnkV5bjACXl06I2)
 # [Парное программирование](https://github.com/Anastasiyabordak/Loci/blob/master/pair_programming.md)
+# [Анализ архитектуры](https://github.com/Anastasiyabordak/Loci/blob/master/doc/arch.md)
 # Спринты
 * 09.02.2019 - 02.03.2019 Создание тренировки "картинка+описание"
 * 02.03.2019 - 23.03.2019 Создание тренировок "собери слово из слогов", "картинка", "описание, а также просмотра карточек
