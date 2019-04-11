@@ -1,7 +1,6 @@
 Обзор архитектуры
 1. To be 
-![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/component.jpeg)
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/component.jpg)
 2. As is
 ![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/bclass.jpeg)
-3. Вывод -> исправление диаграммы классов 
-![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/aclass.jpeg)
+3. Вывод
