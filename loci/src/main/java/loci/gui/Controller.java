@@ -1,7 +1,6 @@
 package loci.gui;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,7 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -67,8 +65,8 @@ public class Controller implements Initializable {
     @FXML
     private RadioButton trainingByChoosingTheAnswer;
 
-    @FXML
-    private ComboBox categoryOfCardBox; //тут все текущие словари
+    @FXML //тут все текущие словари
+    private ComboBox categoryOfCardBox;
     @FXML
     private TableView<Card> tableViev;
     @FXML
@@ -78,11 +76,11 @@ public class Controller implements Initializable {
     @FXML
     private ImageView deskQuestionImage;
 
-    private final String SUBSTRING_PATH = "src/main/resources/";
+    private static final String SUBSTRING_PATH = "src/main/resources/";
     private final Image START_IMAGE = new Image("images/question.png");
-    private final String RED_COLOR = "-fx-text-fill: red";
-    private final String BLACK_COLOR = "-fx-text-fill: black";
-    private final String GREEN_COLOR = "-fx-text-fill: green";
+    private static final String RED_COLOR = "-fx-text-fill: red";
+    private static final String BLACK_COLOR = "-fx-text-fill: black";
+    private static final String GREEN_COLOR = "-fx-text-fill: green";
 
 
     private EnterWord enterWord = new EnterWord();
@@ -107,6 +105,7 @@ public class Controller implements Initializable {
         setDesk();
         setCategoryOfCardBox();
         createToggleGroup();
+
     }
 
     private void createToggleGroup() {
@@ -118,11 +117,12 @@ public class Controller implements Initializable {
         trainingByImageAndDefinition.setSelected(true);
     }
 
-    public void getImage(final MouseEvent event) {
+    public void getImage() {
         Card selectedCard;
         selectedCard = tableViev.getSelectionModel().getSelectedItem();
         if (selectedCard != null) {
-            deskQuestionImage.setImage(new Image(selectedCard.getPicturePath().substring(SUBSTRING_PATH.length()))); //WTF 19?
+            Image image = new Image(selectedCard.getPicturePath().substring(SUBSTRING_PATH.length()));
+            deskQuestionImage.setImage(image); //WTF 19?
         }
     }
 
@@ -136,11 +136,11 @@ public class Controller implements Initializable {
         }
     }
 
-    public void checkSyllableTraining() {
+    private void checkSyllableTraining() {
         if (!resultText.getText().equals("") && !syllables.isEmpty() && !resultText.getFill().equals(Color.BLACK)) {
-                resultText.setFill(Color.BLACK);
-                resultText.setText(card.getWord());
-                setDisableButtons(true);
+            resultText.setFill(Color.BLACK);
+            resultText.setText(card.getWord());
+            setDisableButtons(true);
         } else if (resultText.getText().equals("")) {
             resultText.setText(card.getWord());
         } else {
@@ -148,9 +148,10 @@ public class Controller implements Initializable {
         }
     }
 
-    public void checkChoosingTraining() {
+    private void checkChoosingTraining() {
         if (resultText.getText().equals("")) {
             resultText.setText(card.getWord());
+            setDisableButtons(true);
         } else {
             selectAndStartTraining();
         }
@@ -178,27 +179,28 @@ public class Controller implements Initializable {
         }
     }
 
-    public void goToTraining(final ActionEvent event) {
+    public void goToTraining() {
         trainingSettingsPane.setVisible(false);
         trainingPane.setVisible(true);
         selectAndStartTraining();
     }
 
-    public void goToSettings(final ActionEvent event) {
+    public void goToSettings() {
         trainingSettingsPane.setVisible(true);
         trainingPane.setVisible(false);
     }
 
-    public void changeCardsOfCategory(final ActionEvent event) {
+    public void changeCardsOfCategory() {
         String category = categoryOfCardBox.getValue().toString();
         deskQuestionImage.setImage(START_IMAGE);
-        if (category.equalsIgnoreCase("all"))
+        if (category.equalsIgnoreCase("all")) {
             tableViev.setItems(new Desk().setCardsList());
-        else
+        } else {
             tableViev.setItems(new Desk().setCardsList(category));
+        }
     }
 
-    public void variantASelected(ActionEvent event) {
+    public void variantASelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantA);
         } else if (trainingByChoosingTheAnswer.isSelected()) {
@@ -206,7 +208,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void variantBSelected(ActionEvent event) {
+    public void variantBSelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantB);
         } else if (trainingByChoosingTheAnswer.isSelected()) {
@@ -214,7 +216,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void variantCSelected(ActionEvent event) {
+    public void variantCSelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantC);
         } else if (trainingByChoosingTheAnswer.isSelected()) {
@@ -222,7 +224,7 @@ public class Controller implements Initializable {
         }
     }
 
-    public void variantDSelected(ActionEvent event) {
+    public void variantDSelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantD);
         } else if (trainingByChoosingTheAnswer.isSelected()) {
@@ -230,7 +232,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void analizeAnswerInChoosingTraining(Button button) {
+    private void analizeAnswerInChoosingTraining(final Button button) {
         if (button.getText().equalsIgnoreCase(card.getWord())) {
             button.setTextFill(Color.GREEN);
         } else {
@@ -238,9 +240,10 @@ public class Controller implements Initializable {
         }
         resultText.setText(card.getWord());
         resultText.setFill(Color.GREEN);
+        setDisableButtons(true);
     }
 
-    private void analizeAnswerInSyllableTraining(Button button) {
+    private void analizeAnswerInSyllableTraining(final Button button) {
         if (!syllables.isEmpty()) {
             if (syllables.get(0).equals(button.getText())) {
                 button.setTextFill(Color.GREEN);
@@ -259,17 +262,21 @@ public class Controller implements Initializable {
     private void selectAndStartTraining() {
         setAllWidgetsUnvisible();
         changeCard();
-        if (trainingByImageAndDefinition.isSelected())
+        if (trainingByImageAndDefinition.isSelected()) {
             enterWordByImageAndDefinitionTraining();
-        if (trainingByImage.isSelected())
+        }
+        if (trainingByImage.isSelected()) {
             enterWordByImageTraining();
-        if (trainingByDefinition.isSelected())
+        }
+        if (trainingByDefinition.isSelected()) {
             enterWordByDefinitionTraining();
-        if (trainingBySyllable.isSelected())
+        }
+        if (trainingBySyllable.isSelected()) {
             buttonsTrainingBySyllable();
-        if (trainingByChoosingTheAnswer.isSelected())
+        }
+        if (trainingByChoosingTheAnswer.isSelected()) {
             buttonsTrainingByChoosingTheAnswer();
-
+        }
     }
 
     private void buttonsTrainingByChoosingTheAnswer() {
@@ -277,7 +284,7 @@ public class Controller implements Initializable {
         ChooseOneOfFour chooseOneOfFour = new ChooseOneOfFour();
         List<String> words = chooseOneOfFour.getListOfWords(card);
         questionTextArea.setText(card.getDefinition());
-        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
+        setNewQuestionImage();
         setAnswersInButtons(words);
     }
 
@@ -287,29 +294,37 @@ public class Controller implements Initializable {
         syllables = wordFromParts.wordSplit(card);
         List<String> sortedSyllables = new ArrayList<>(syllables);
         questionTextArea.setText(card.getDefinition());
-        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
+        setNewQuestionImage();
         wordFromParts.mixWordParts(sortedSyllables);
         setAnswersInButtons(sortedSyllables);
     }
 
 
-    private void setAnswersInButtons(List<String> answers) {
+    private void setAnswersInButtons(final List<String> answers) {
         buttonVariantA.setText(answers.remove(0));
         buttonVariantB.setText(answers.remove(0));
-        if (!answers.isEmpty())
+        if (!answers.isEmpty()) {
             buttonVariantC.setText(answers.remove(0));
-        else
+        } else {
             buttonVariantC.setVisible(false);
-        if (!answers.isEmpty())
+        }
+        if (!answers.isEmpty()) {
             buttonVariantD.setText(answers.remove(0));
-        else
+        } else {
             buttonVariantD.setVisible(false);
+        }
     }
 
     private void enterWordByImageAndDefinitionTraining() {
         prepareScreenForEnterTraining();
         this.questionTextArea.setText(card.getDefinition());
-        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
+        setNewQuestionImage();
+    }
+
+    private void setNewQuestionImage() {
+        String path = card.getPicturePath().substring(SUBSTRING_PATH.length());
+        Image image = new Image(path);
+        questionImage.setImage(image);
     }
 
     private void enterWordByDefinitionTraining() {
@@ -319,7 +334,7 @@ public class Controller implements Initializable {
 
     private void enterWordByImageTraining() {
         prepareScreenForEnterTraining();
-        questionImage.setImage(new Image(card.getPicturePath().substring(SUBSTRING_PATH.length())));
+        setNewQuestionImage();
     }
 
     private void changeCard() {
@@ -386,14 +401,14 @@ public class Controller implements Initializable {
 
     }
 
-    public void setTextFillButtons(Color color) {
+    private void setTextFillButtons(Color color) {
         buttonVariantA.setTextFill(color);
         buttonVariantB.setTextFill(color);
         buttonVariantC.setTextFill(color);
         buttonVariantD.setTextFill(color);
     }
 
-    public void setDisableButtons(boolean isDisable) {
+    private void setDisableButtons(boolean isDisable) {
         buttonVariantA.setDisable(isDisable);
         buttonVariantB.setDisable(isDisable);
         buttonVariantC.setDisable(isDisable);
@@ -404,7 +419,7 @@ public class Controller implements Initializable {
         categoryOfCardBox.setItems(new Desk().setCategoryList());
     }
 
-    public void openImageDesk(MouseEvent event) {
+    public void openImageDesk() {
 
         if (deskQuestionImage.getImage() != START_IMAGE) {
 
