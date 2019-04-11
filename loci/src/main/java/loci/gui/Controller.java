@@ -395,6 +395,7 @@ public class Controller implements Initializable {
         });
         backTableColumn.setCellValueFactory(new PropertyValueFactory<>("word"));
         frontTableColumn.setCellValueFactory(new PropertyValueFactory<>("definition"));
+        deskQuestionImage.setImage(START_IMAGE);
         backTableColumn.setResizable(false);
         frontTableColumn.setResizable(false);
         tableViev.setItems(new Desk().setCardsList());
