@@ -22,6 +22,7 @@ import loci.exception.CustomException;
 import loci.parser.DatabaseCreator;
 import loci.traning.ChooseOneOfFour;
 import loci.traning.EnterWord;
+import loci.traning.Training;
 import loci.traning.WordFromParts;
 
 import java.net.URL;
@@ -87,6 +88,7 @@ public class Controller implements Initializable {
     private Card card;
     private ToggleGroup trainingsGroup = new ToggleGroup();
     private List<String> syllables;
+    private String category = "all";
 
 
     @FXML
@@ -339,7 +341,7 @@ public class Controller implements Initializable {
 
     private void changeCard() {
         String category = enterWord.chooseCategory();
-        card = enterWord.chooseCard(category);
+        card = enterWord.chooseCardFromCategory(category);
     }
 
     private void prepareScreenForButtonsTraining() {
