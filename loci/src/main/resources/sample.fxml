@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkAnswerForEnter" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="loci.gui.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkAnswerForEnter" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="loci.gui.Controller">
     <children>
         <TabPane layoutX="-7.0" layoutY="-7.0" prefHeight="607.0" prefWidth="915.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -62,6 +62,12 @@
                                     <Font size="24.0" />
                                  </font>
                               </RadioButton>
+                              <ComboBox fx:id="categoryForTraining" layoutX="315.0" layoutY="347.0" prefWidth="150.0" />
+                              <Text layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose category for training:">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="trainingPane" prefHeight="579.0" prefWidth="915.0" visible="false">
