@@ -14,7 +14,7 @@ public class ChooseOneOfFour extends Training {
         List<String> words = new ArrayList<>();
         words.add(card.getWord());
         while (words.size() < NUMBER_OF_WORDS_REQUIRED) {
-            String word = this.chooseCard(this.chooseCategory()).getWord();
+            String word = this.chooseCardFromCategory(this.chooseCategory()).getWord();
             if (!words.contains(word)) {
                 words.add(word);
             }
