@@ -69,6 +69,8 @@ public class Controller implements Initializable {
     @FXML //тут все текущие словари
     private ComboBox categoryOfCardBox;
     @FXML
+    private ComboBox categoryForTraining;
+    @FXML
     private TableView<Card> tableViev;
     @FXML
     private TableColumn<Card, String> backTableColumn;
@@ -105,7 +107,10 @@ public class Controller implements Initializable {
         }
 
         setDesk();
-        setCategoryOfCardBox();
+        setCategory(categoryOfCardBox);
+        setCategory(categoryForTraining);
+        categoryOfCardBox.getSelectionModel().selectFirst();
+        categoryForTraining.getSelectionModel().selectFirst();
         createToggleGroup();
 
     }
@@ -340,7 +345,11 @@ public class Controller implements Initializable {
     }
 
     private void changeCard() {
-        String category = enterWord.chooseCategory();
+        String category;
+        if(categoryForTraining.getValue().toString().equalsIgnoreCase("all"))
+            category = enterWord.chooseCategory();
+        else
+            category = new String(categoryForTraining.getValue().toString());
         card = enterWord.chooseCardFromCategory(category);
     }
 
@@ -418,8 +427,8 @@ public class Controller implements Initializable {
         buttonVariantD.setDisable(isDisable);
     }
 
-    private void setCategoryOfCardBox() {
-        categoryOfCardBox.setItems(new Desk().setCategoryList());
+    private void setCategory(ComboBox comboBox) {
+        comboBox.setItems(new Desk().setCategoryList());
     }
 
     public void openImageDesk() {
