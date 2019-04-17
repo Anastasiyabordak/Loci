@@ -16,6 +16,11 @@ public class DatabaseCreator {
     private static final String TXT_EXTENTION =
             ".txt";
 
+    /**
+     * creating database from read from files data
+     *
+     * @throws CustomException if something gone wrong
+     */
     public void createDatabase() throws CustomException {
         CsvReader reader = new CsvReader();
         DataFilesParser parser = new DataFilesParser();

@@ -14,7 +14,7 @@ public class DataValidator {
     }
 
     /**
-     * checks if data stringarray is nor empty.
+     * checks if data string array is nor empty.
      */
     public boolean isEmptyParam(final String[] data) {
         for (String param : data) {

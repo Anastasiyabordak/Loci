@@ -28,27 +28,34 @@ Database {
         return dataMap;
     }
 
+    /**
+     * add new words category to database
+     *
+     * @param category is name of new category
+     * @param cards is list of card of new category
+     */
     public void addCategory(final String category, final List<Card> cards) {
         if (!cards.isEmpty()) {
             this.dataMap.put(category, cards);
         }
     }
 
+    /**
+     * getting list of categories existing in database
+     *
+     * @return list of categories names
+     */
     public List<String> getCategoriesList() {
         return new ArrayList<>(dataMap.keySet());
     }
 
+    /**
+     * getting all cards of given category
+     *
+     * @param category of necessary cards
+     * @return list of cards of given category
+     */
     public List<Card> getCardsByCategory(final String category) {
         return this.dataMap.get(category);
     }
-
-    /**
-     * This method return size of list of objects BusStop.
-     *
-     * @return size of list of stops.
-     */
-    public int size() {
-        return this.dataMap.size();
-    }
-
 }

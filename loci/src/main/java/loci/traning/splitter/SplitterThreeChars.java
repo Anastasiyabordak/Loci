@@ -16,19 +16,30 @@ public class SplitterThreeChars implements Splitter {
         splitted.add(word.substring(beginIndex, endIndex + 1));
         splitted.add(word.replaceFirst(splitted.get(0), ""));
         if (beginIndex > 0) {
-            return makeRightSillabSquence(splitted);
+            return makeRightSyllabSquence(splitted);
         } else {
             return splitted;
         }
     }
 
-    private List<String> makeRightSillabSquence(final List<String> splitted) {
+    /**
+     * placing syllables in proper order
+     *
+     * @param splitted list of word parts
+     * @return lis tof word parts in proper order
+     */
+    private List<String> makeRightSyllabSquence(final List<String> splitted) {
         List<String> rightSplit = new ArrayList<>();
         rightSplit.add(splitted.get(1));
         rightSplit.add(splitted.get(0));
         return rightSplit;
     }
 
+    /**
+     * randomly generating 0 or 1
+     *
+     * @return 0 or 1
+     */
     private int getPartForForParseWord() {
         return new Random().nextInt(RANDOM_BOUND);
     }

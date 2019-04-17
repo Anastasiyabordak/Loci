@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class SplitterImpl implements Splitter {
+
     private static final int RANDOM_BOUND = 2;
 
     @Override
@@ -24,6 +25,12 @@ public class SplitterImpl implements Splitter {
         return splitted;
     }
 
+    /**
+     * generate randomly the end index for word part from initial word
+     *
+     * @param part to be splitted
+     * @return end index
+     */
     private int randEndIndexForm(String part) {
         if (part.length() > 2) {
             return part.length() / 2 + getPartForForParseWord();
@@ -31,6 +38,11 @@ public class SplitterImpl implements Splitter {
         return part.length() / 2;
     }
 
+    /**
+     * randomly generating 0 or 1
+     *
+     * @return 0 or 1
+     */
     private int getPartForForParseWord() {
         return new Random().nextInt(RANDOM_BOUND);
     }

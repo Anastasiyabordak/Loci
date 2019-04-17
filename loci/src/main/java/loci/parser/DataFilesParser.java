@@ -16,6 +16,12 @@ public class DataFilesParser {
     private static final int WORD_POSITION = 0;
     private static final int DEFINITION_POSITION = 1;
 
+    /**
+     * filtering valid data strings from file
+     *
+     * @param fileLines all strings read from file
+     * @return list of valid data strings
+     */
     List<String[]> findValidInfoStrings(final List<String> fileLines) {
         Logger logger = LogManager.getLogger();
 
@@ -41,6 +47,12 @@ public class DataFilesParser {
         return validDataStrings;
     }
 
+    /**
+     * creating Card entities from valid data from file
+     *
+     * @param validDataStrings string with data for card
+     * @return
+     */
     List<Card> createCardsFromValidData(
             final List<String[]> validDataStrings) {
         List<Card> cards = new ArrayList<>();

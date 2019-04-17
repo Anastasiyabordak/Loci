@@ -12,6 +12,13 @@ import java.util.stream.Stream;
 
 public class CsvReader {
 
+    /**
+     * reading all lines from file
+     *
+     * @param filePath is path to file to be read
+     * @return list of file lines
+     * @throws CustomException if something wrong with file
+     */
     public List<String> readStringsFromFile(final String filePath)
             throws CustomException {
 
