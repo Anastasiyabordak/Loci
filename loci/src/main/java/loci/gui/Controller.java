@@ -124,6 +124,9 @@ public class Controller implements Initializable {
         trainingByImageAndDefinition.setSelected(true);
     }
 
+    /**
+     * getting image from desk tab
+     */
     public void getImage() {
         Card selectedCard;
         selectedCard = tableViev.getSelectionModel().getSelectedItem();
@@ -133,6 +136,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * starting checking users answer after enter
+     * what kind of training we are  going to check
+     * @param event
+     */
     public void checkAnswerForEnter(final KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (trainingBySyllable.isSelected()) {
@@ -143,6 +151,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * cheking entered answer
+     * fro training by syllable
+     */
     private void checkSyllableTraining() {
         if (!resultText.getText().equals("") && !syllables.isEmpty() && !resultText.getFill().equals(Color.BLACK)) {
             resultText.setFill(Color.BLACK);
@@ -155,6 +167,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * cheching entered answer
+     * for training 1 from 4 words
+     */
     private void checkChoosingTraining() {
         if (resultText.getText().equals("")) {
             resultText.setText(card.getWord());
@@ -164,6 +180,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * starting checking training for definition entering
+     * @param event
+     */
     public void checkAnswer(final KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (!this.resultText.getText().equalsIgnoreCase("")) {
@@ -186,17 +206,26 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * going to training from settings
+     */
     public void goToTraining() {
         trainingSettingsPane.setVisible(false);
         trainingPane.setVisible(true);
         selectAndStartTraining();
     }
 
+    /**
+     * going to settings from training
+     */
     public void goToSettings() {
         trainingSettingsPane.setVisible(true);
         trainingPane.setVisible(false);
     }
 
+    /**
+     * select new card for training
+     */
     public void changeCardsOfCategory() {
         String category = categoryOfCardBox.getValue().toString();
         deskQuestionImage.setImage(START_IMAGE);
@@ -207,6 +236,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * processing button pressing 'A'
+     */
     public void variantASelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantA);
@@ -215,6 +247,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * processing button pressing 'B'
+     */
     public void variantBSelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantB);
@@ -223,6 +258,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * processing button pressing 'C'
+     */
     public void variantCSelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantC);
@@ -231,6 +269,9 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * processing button pressing 'D'
+     */
     public void variantDSelected() {
         if (trainingBySyllable.isSelected()) {
             analizeAnswerInSyllableTraining(buttonVariantD);
@@ -239,6 +280,10 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * analysing answer in training 1 from 4
+     * @param button
+     */
     private void analizeAnswerInChoosingTraining(final Button button) {
         if (button.getText().equalsIgnoreCase(card.getWord())) {
             button.setTextFill(Color.GREEN);
@@ -250,6 +295,10 @@ public class Controller implements Initializable {
         setDisableButtons(true);
     }
 
+    /**
+     * analysing answer in training by syllable
+     * @param button
+     */
     private void analizeAnswerInSyllableTraining(final Button button) {
         if (!syllables.isEmpty()) {
             if (syllables.get(0).equals(button.getText())) {
@@ -266,6 +315,9 @@ public class Controller implements Initializable {
         button.setDisable(true);
     }
 
+    /**
+     * searching for selected training and its start
+     */
     private void selectAndStartTraining() {
         setAllWidgetsUnvisible();
         changeCard();
@@ -306,7 +358,10 @@ public class Controller implements Initializable {
         setAnswersInButtons(sortedSyllables);
     }
 
-
+    /**
+     * set all possible options to buttons
+     * @param answers - list of options
+     */
     private void setAnswersInButtons(final List<String> answers) {
         buttonVariantA.setText(answers.remove(0));
         buttonVariantB.setText(answers.remove(0));
@@ -344,6 +399,9 @@ public class Controller implements Initializable {
         setNewQuestionImage();
     }
 
+    /**
+     * selecting new card
+     */
     private void changeCard() {
         String category;
         if(categoryForTraining.getValue().toString().equalsIgnoreCase("all"))
@@ -413,6 +471,7 @@ public class Controller implements Initializable {
 
     }
 
+
     private void setTextFillButtons(Color color) {
         buttonVariantA.setTextFill(color);
         buttonVariantB.setTextFill(color);
@@ -431,6 +490,11 @@ public class Controller implements Initializable {
         comboBox.setItems(new Desk().setCategoryList());
     }
 
+    /**
+     * Open image in new window from tab "Desk"
+     * @param
+     * @return open new window
+     */
     public void openImageDesk() {
 
         if (deskQuestionImage.getImage() != START_IMAGE) {
