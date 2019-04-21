@@ -15,6 +15,7 @@ Java, MySQL
 # [Парное программирование](https://github.com/Anastasiyabordak/Loci/blob/master/pair_programming.md)
 # [Анализ архитектуры](https://github.com/Anastasiyabordak/Loci/blob/master/doc/arch.md)
 # [Технический долг](https://github.com/Anastasiyabordak/Loci/blob/master/doc/debt.md)
+# [UX](https://github.com/Anastasiyabordak/Loci/blob/master/doc/UX.md)
 # Спринты
 * 09.02.2019 - 02.03.2019 Создание тренировки "картинка+описание"
 * 02.03.2019 - 23.03.2019 Создание тренировок "собери слово из слогов", "картинка", "описание, а также просмотра карточек
