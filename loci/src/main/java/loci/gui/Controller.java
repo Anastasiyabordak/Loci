@@ -54,6 +54,7 @@ public class Controller implements Initializable {
     private Button buttonVariantD;
     @FXML
     private GridPane gridForButtons;
+
     //Settings for training
     @FXML
     private RadioButton trainingByImageAndDefinition;
@@ -82,7 +83,7 @@ public class Controller implements Initializable {
     private static final String SUBSTRING_PATH = "src/main/resources/";
     private final Image START_IMAGE = new Image("images/question.png");
     private static final String RED_COLOR = "-fx-text-fill: red";
-    private static final String BLACK_COLOR = "-fx-text-fill: black";
+    private static final String BLACK_COLOR = "-fx-text-fill: white";
     private static final String GREEN_COLOR = "-fx-text-fill: green";
 
 
@@ -203,6 +204,7 @@ public class Controller implements Initializable {
                 this.resultText.setText(card.getWord());
                 this.resultText.setVisible(true);
             }
+
         }
     }
 
@@ -221,6 +223,7 @@ public class Controller implements Initializable {
     public void goToSettings() {
         trainingSettingsPane.setVisible(true);
         trainingPane.setVisible(false);
+
     }
 
     /**
@@ -311,6 +314,7 @@ public class Controller implements Initializable {
                 resultText.setFill(Color.RED);
                 setDisableButtons(true);
             }
+
         }
         button.setDisable(true);
     }
@@ -409,6 +413,7 @@ public class Controller implements Initializable {
         else
             category = new String(categoryForTraining.getValue().toString());
         card = enterWord.chooseCardFromCategory(category);
+
     }
 
     private void prepareScreenForButtonsTraining() {
@@ -417,7 +422,7 @@ public class Controller implements Initializable {
         this.buttonVariantB.setText("");
         this.buttonVariantC.setText("");
         this.buttonVariantD.setText("");
-        setTextFillButtons(Color.BLACK);
+        setTextFillButtons(Color.WHITE);
         this.gridForButtons.setVisible(true);
         buttonVariantC.setVisible(true);
         buttonVariantD.setVisible(true);
