@@ -83,7 +83,7 @@ public class Controller implements Initializable {
     private static final String SUBSTRING_PATH = "src/main/resources/";
     private final Image START_IMAGE = new Image("images/question.png");
     private static final String RED_COLOR = "-fx-text-fill: red";
-    private static final String BLACK_COLOR = "-fx-text-fill: white";
+    private static final String BLACK_COLOR = "-fx-text-fill: black";
     private static final String GREEN_COLOR = "-fx-text-fill: green";
 
 
