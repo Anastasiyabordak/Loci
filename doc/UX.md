@@ -27,9 +27,22 @@
 * создание строчки около картинки в режиме просмотра карточек: "Click to show full image"
 * изменение дизайна кнопок на более плоские 
 * изменение цветовой композиции приложения на более современные
-* по клику на строку в таблице просмотра карточек можно просмотреть полностью изображение
 * добавить описание в help вкладке
-* создание перехода между вкладками по Ctr+Tab
-* выбор тренировки в начале не по кнопке, а по Enter
-* создание более понятных для пользователя ассоциаций по картинкам
 * в каждой тренировке добавить строку - "Click Enter to show correct answer"
+
+# Улучшение UX:
+до - ничего <br>
+после <br>
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/image/after_1.jpg)
+до 
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/image/before_2.JPG)
+после
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/image/after_2.jpg)
+до 
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/image/before_3.JPG)
+после
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/image/after_3.jpg)
+до 
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/image/before_4.JPG)
+после
+![](https://github.com/Anastasiyabordak/Loci/blob/master/doc/image/after_4.jpg)
