@@ -20,10 +20,7 @@ import loci.entity.Card;
 import loci.exception.CustomException;
 
 import loci.parser.DatabaseCreator;
-import loci.traning.ChooseOneOfFour;
-import loci.traning.EnterWord;
-import loci.traning.Training;
-import loci.traning.WordFromParts;
+import loci.traning.*;
 
 import java.net.URL;
 import java.util.*;
@@ -113,7 +110,6 @@ public class Controller implements Initializable {
         categoryOfCardBox.getSelectionModel().selectFirst();
         categoryForTraining.getSelectionModel().selectFirst();
         createToggleGroup();
-
     }
 
     private void createToggleGroup() {
