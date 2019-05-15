@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkAnswerForEnter" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="loci.gui.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#checkAnswerForEnter" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="loci.gui.Controller">
     <children>
         <TabPane layoutX="-7.0" layoutY="-7.0" prefHeight="607.0" prefWidth="915.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -64,6 +64,11 @@
                                     <Font name="Swiss 721 Bold Condensed BT" size="27.0" />
                                  </font>
                               </Text>
+                              <RadioButton fx:id="trainingByHidingLetters" layoutX="42.0" layoutY="378.0" mnemonicParsing="false" text="By hiding letters">
+                                 <font>
+                                    <Font name="Tw Cen MT" size="24.0" />
+                                 </font>
+                              </RadioButton>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="trainingPane" prefHeight="579.0" prefWidth="915.0" visible="false">

@@ -63,6 +63,8 @@ public class Controller implements Initializable {
     private RadioButton trainingBySyllable;
     @FXML
     private RadioButton trainingByChoosingTheAnswer;
+    @FXML
+    private RadioButton trainingByHidingLetters;
 
     @FXML //тут все текущие словари
     private ComboBox categoryOfCardBox;
@@ -118,6 +120,7 @@ public class Controller implements Initializable {
         trainingByDefinition.setToggleGroup(trainingsGroup);
         trainingBySyllable.setToggleGroup(trainingsGroup);
         trainingByChoosingTheAnswer.setToggleGroup(trainingsGroup);
+        trainingByHidingLetters.setToggleGroup(trainingsGroup);
         trainingByImageAndDefinition.setSelected(true);
     }
 
@@ -324,6 +327,9 @@ public class Controller implements Initializable {
         if (trainingByImageAndDefinition.isSelected()) {
             enterWordByImageAndDefinitionTraining();
         }
+        if (trainingByHidingLetters.isSelected()) {
+            enterWordByHidingLettersTraining();
+        }
         if (trainingByImage.isSelected()) {
             enterWordByImageTraining();
         }
@@ -375,6 +381,13 @@ public class Controller implements Initializable {
         } else {
             buttonVariantD.setVisible(false);
         }
+    }
+
+    private  void enterWordByHidingLettersTraining() {
+        prepareScreenForEnterTraining();
+        GuessMissingLetters train = new GuessMissingLetters();
+        this.questionTextArea.setText(train.hideLetters( card.getWord()));
+        setNewQuestionImage();
     }
 
     private void enterWordByImageAndDefinitionTraining() {
