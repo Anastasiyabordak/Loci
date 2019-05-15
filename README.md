@@ -7,7 +7,7 @@
 # Описание
 Loci - проект для расширения словарного запаса на английском. Пользователь сможет тренировать карточки с использованием различных методов: сопоставить карточку с её значением, изображением или собрать изучаемое слово из частей. Также пользователь сможет просмотреть все существующие на текущий момент.
 # Технологии
-Java, MySQL 
+Java
 # [Dashboard](https://trello.com/b/MJmoT6JF/bigas)
 # [PlanningPocker](https://play.planningpoker.com/play/game/YjlRoLAd1b59TqEGoOXF4dw8fAMCyyUt)
 # [Выбор названия](https://goo.gl/forms/aYxLI051cNnhsHCr1)
